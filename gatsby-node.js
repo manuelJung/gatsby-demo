@@ -23,7 +23,8 @@ exports.createPages = async ({graphql, actions}) => {
     }
   }`)
   let pages_l1 = gq.data.rootCategories.edges.map(edge => ({
-    lv1: edge.node.slug
+    lv1: edge.node.slug,
+    slug: edge.node.slug
   }))
 
   let pages_l2 = await Promise.all(pages_l1.map(async page => {
@@ -38,7 +39,8 @@ exports.createPages = async ({graphql, actions}) => {
       }`)
       if(!response.data.categories) return null
       return response.data.categories.edges.map(edge => Object.assign({}, page, {
-        lv2: edge.node.slug
+        lv2: edge.node.slug,
+        slug: edge.node.slug
       }))
   }))
 
@@ -59,7 +61,8 @@ exports.createPages = async ({graphql, actions}) => {
       }`)
       if(!response.data.categories) return null
       return response.data.categories.edges.map(edge => Object.assign({}, page, {
-        lv3: edge.node.slug
+        lv3: edge.node.slug,
+        slug: edge.node.slug
       }))
   }))
 
