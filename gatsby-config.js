@@ -38,6 +38,12 @@ module.exports = {
         // Learn about environment variables: https://gatsby.dev/env-vars
         accessToken: '79033c046d72767d5c834cbc256baace028b0697a0e84bc4f0dd459b15352e8e',
       },
+    },
+    {
+      resolve: `gatsby-plugin-styled-components`,
+      options: {
+        // Add any options here
+      },
     }
   ],
 }
