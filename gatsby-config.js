@@ -30,6 +30,14 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
-    './plugins/algolia'
+    './plugins/algolia',
+    {
+      resolve: `gatsby-source-contentful`,
+      options: {
+        spaceId: `t1jhzsycxuhp`,
+        // Learn about environment variables: https://gatsby.dev/env-vars
+        accessToken: '79033c046d72767d5c834cbc256baace028b0697a0e84bc4f0dd459b15352e8e',
+      },
+    }
   ],
 }
