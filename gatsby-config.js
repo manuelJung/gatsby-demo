@@ -44,6 +44,33 @@ module.exports = {
       options: {
         // Add any options here
       },
+    },
+    {
+      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      options: {
+        fonts: [
+          {
+            family: `Oswald`,
+            subsets: [`latin`],
+          },
+          {
+            family: `Open Sans`,
+            variants: [`400`, `700`]
+          },
+          {
+            family: "Roboto",
+            variants: [
+              "400",
+              "400i",
+              "700",
+              "700i"
+            ],
+            subsets: [
+              "latin-ext"
+            ]
+          }
+        ],
+      },
     }
   ],
 }
