@@ -1,13 +1,21 @@
 import React from 'react'
 import { graphql } from 'gatsby'
 import Layout from '../Layout'
+import styled from 'styled-components'
 
 export default (props) => {
-  console.log(props)
   return (
     <Layout>
-      PAGE {props.data.category.name}
-      <br/>
+      <Wrapper>
+        <aside className='sidebar'>
+          <ul>
+            {(props.data.tree_lv2.childs||[]).map(row => <li key={row.name}>{row.name}</li>)}
+          </ul>
+        </aside>
+        <section className='content'>
+          My Content
+        </section>
+      </Wrapper>
     </Layout>
   )
 }
@@ -29,5 +37,20 @@ export const query = graphql`
         name
       }
     }
+  }
+`
+
+const Wrapper = styled.div`
+  display: flex;
+
+  > .sidebar {
+    width: 200px;
+    background: lightgrey;
+    margin-right: 10px;
+  }
+
+  > .content {
+    flex: 1;
+    background: steelblue;
   }
 `
