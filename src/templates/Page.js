@@ -3,9 +3,10 @@ import { graphql } from 'gatsby'
 import Layout from '../Layout'
 
 export default (props) => {
+  console.log(props)
   return (
     <Layout>
-      PAGE {props.data.contentfulPage.slug}
+      PAGE {props.data.contentfulProductCategories.slug}
       <br/>
     </Layout>
   )
@@ -13,11 +14,8 @@ export default (props) => {
 
 export const query = graphql`
   query ($slug: String!) {
-    contentfulPage(slug: {eq: $slug}){
+    contentfulProductCategories(slug: {eq: $slug}){
       slug
-      content {
-        content
-      }
     }
   }
 `

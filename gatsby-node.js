@@ -12,87 +12,44 @@ var path = require('path')
 // }
 
 exports.createPages = async ({graphql, actions}) => {
-  const gq = await graphql(`
-  {
-    rootCategories:allContentfulPage(filter: {root: {eq: true}}){
+  // create category pages
+  const gq = await graphql(`{
+    categories:allContentfulProductCategories(filter: {root: {eq: true}}){
       edges {
         node {
           slug
+          childs {
+            slug
+            childs {
+              slug
+            }
+          }
         }
       }
     }
   }`)
-  let pages_l1 = gq.data.rootCategories.edges.map(edge => ({
-    lv1: edge.node.slug,
-    slug: edge.node.slug
-  }))
-
-  let pages_l2 = await Promise.all(pages_l1.map(async page => {
-      const response = await graphql(`{
-        categories:allContentfulPage(filter: {parents: {elemMatch: {slug: {eq: "${page.lv1}"}}}}) {
-          edges {
-            node {
-              slug
-            }
-          }
-        }
-      }`)
-      if(!response.data.categories) return null
-      return response.data.categories.edges.map(edge => Object.assign({}, page, {
-        lv2: edge.node.slug,
-        slug: edge.node.slug
-      }))
-  }))
-
-  pages_l2 = pages_l2.reduce((p,n) => {
-    if(n) p.push(...n)
-    return p
-  }, [])
-
-  let pages_l3 = await Promise.all(pages_l2.map(async page => {
-      const response = await graphql(`{
-        categories:allContentfulPage(filter: {parents: {elemMatch: {slug: {eq: "${page.lv2}"}}}}) {
-          edges {
-            node {
-              slug
-            }
-          }
-        }
-      }`)
-      if(!response.data.categories) return null
-      return response.data.categories.edges.map(edge => Object.assign({}, page, {
-        lv3: edge.node.slug,
-        slug: edge.node.slug
-      }))
-  }))
-
-  pages_l3 = pages_l3.reduce((p,n) => {
-    if(n) p.push(...n)
-    return p
-  }, [])
-
-
-  pages_l1.forEach(page => {
+  gq.data.categories.edges.forEach(edge => {
+    let context = { slug: edge.node.slug, lv1: edge.node.slug }
     actions.createPage({
-      path: page.lv1,
+      path: context.lv1,
       component: path.resolve(__dirname, 'src/templates/Page.js'),
-      context: page
+      context
     })
-  })
-
-  pages_l2.forEach(page => {
-    actions.createPage({
-      path: `${page.lv1}/${page.lv2}`,
-      component: path.resolve(__dirname, 'src/templates/Page.js'),
-      context: page
-    })
-  })
-
-  pages_l3.forEach(page => {
-    actions.createPage({
-      path: `${page.lv1}/${page.lv2}/${page.lv3}`,
-      component: path.resolve(__dirname, 'src/templates/Page.js'),
-      context: page
+    edge.node.childs && edge.node.childs.forEach(node => {
+      context = { ...context, lv2: node.slug, slug: node.slug }
+      actions.createPage({
+        path: `${context.lv1}/${context.lv2}`,
+        component: path.resolve(__dirname, 'src/templates/Page.js'),
+        context
+      })
+      node.childs && node.childs.map(node => {
+        context = { ...context, lv3: node.slug, slug: node.slug }
+        actions.createPage({
+          path: `${context.lv1}/${context.lv2}/${context.lv3}`,
+          component: path.resolve(__dirname, 'src/templates/Page.js'),
+          context
+        })
+      })
     })
   })
 }
