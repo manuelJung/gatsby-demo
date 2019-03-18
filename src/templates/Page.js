@@ -6,16 +6,28 @@ export default (props) => {
   console.log(props)
   return (
     <Layout>
-      PAGE {props.data.contentfulProductCategories.slug}
+      PAGE {props.data.category.name}
       <br/>
     </Layout>
   )
 }
 
 export const query = graphql`
-  query ($slug: String!) {
-    contentfulProductCategories(slug: {eq: $slug}){
-      slug
+  query ($slug:String!, $lv1:String, $lv2:String) {
+    category:contentfulProductCategories(slug: {eq: $slug}){
+      name
+    }
+    tree_lv2: contentfulProductCategories(slug: {eq: $lv1}){
+      name,
+      childs {
+        name
+      }
+    }
+    tree_lv3: contentfulProductCategories(slug: {eq: $lv2}){
+      name,
+      childs {
+        name
+      }
     }
   }
 `
