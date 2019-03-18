@@ -68,7 +68,16 @@ module.exports = {
             subsets: [
               "latin-ext"
             ]
-          }
+          },
+          // {
+          //   resolve: `gatsby-source-graphql`,
+          //   options: {
+          //     fieldName: `cms`,
+          //     url: "https://api-euwest.graphcms.com/v1/cjta3wklb2dew01dn8hacoei7/master",
+          //     typeName: `GraphCMS`,
+          //     refetchInterval: 60,
+          //   },
+          // }
         ],
       },
     }

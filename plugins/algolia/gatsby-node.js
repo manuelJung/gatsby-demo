@@ -2,29 +2,22 @@ var algoliasearch = require('algoliasearch')
 var algoliasearchHelper = require('algoliasearch-helper')
 var crypto = require('crypto')
 
-var client = algoliasearch('08VQW969UU', 'bb368529fd7609c7d79f44a58191b35f')
+// var client = algoliasearch('08VQW969UU', 'bb368529fd7609c7d79f44a58191b35f')
+var client = algoliasearch('0BYMLMXGLI', '7058207f486c5d9c0a0e2d31fd10e7e5')
 
-
-const getHelper = () => {
-  var helper = algoliasearchHelper(client, 'static-block', {
-    facets: ['identifier']
+const fetchHits = index => {
+  var helper = algoliasearchHelper(client, index, {
+    hitsPerPage: 1000,
+    attributesToHighlight: []
   })
-  return helper
-}
-
-exports.sourceNodes = async ({ actions }) => {
-  const { createNode } = actions
-  // Create nodes here, generally by downloading data
-  // from a remote API.
-  const helper = getHelper()
-  const data = await helper.searchOnce()
+  return helper.searchOnce()
     .then(result => result.content.hits)
     .then(hits => hits.map(hit => Object.assign({}, hit, {
       id: hit.objectID,
       parent: null, // or null if it's a source node without a parent
       children: [],
       internal: {
-        type: `staticBlock`,
+        type: index,
         contentDigest: crypto
           .createHash(`md5`)
           .update(JSON.stringify(hit))
@@ -34,10 +27,16 @@ exports.sourceNodes = async ({ actions }) => {
         // description: `Cool Service: "Title of entry"`, // optional
       }
     })))
+}
 
-  // Process data into nodes.
-  data.forEach(hit => createNode(hit))
-
-  // We're done, return.
-  return
+exports.sourceNodes = async ({ actions }) => {
+  const { createNode } = actions
+  // Create nodes here, generally by downloading data
+  // from a remote API.
+  await Promise.all([
+    fetchHits('pages').then(hits => hits.forEach(hit => createNode(hit))),
+    fetchHits('magazine').then(hits => hits.forEach(hit => createNode(hit))),
+    fetchHits('navigation').then(hits => hits.forEach(hit => createNode(hit))),
+    fetchHits('staticblocks').then(hits => hits.forEach(hit => createNode(hit))),
+  ])
 }
