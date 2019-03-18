@@ -1,0 +1,8 @@
+scalar STORY
+
+type 
+
+type Query {
+  message: STORY
+  foo: String
+}

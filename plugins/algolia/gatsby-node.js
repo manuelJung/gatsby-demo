@@ -1,6 +1,8 @@
 var algoliasearch = require('algoliasearch')
 var algoliasearchHelper = require('algoliasearch-helper')
 var crypto = require('crypto')
+var fetchCategories = require('./categories')
+
 
 // var client = algoliasearch('08VQW969UU', 'bb368529fd7609c7d79f44a58191b35f')
 var client = algoliasearch('0BYMLMXGLI', '7058207f486c5d9c0a0e2d31fd10e7e5')
@@ -33,10 +35,12 @@ exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions
   // Create nodes here, generally by downloading data
   // from a remote API.
-  await Promise.all([
-    fetchHits('pages').then(hits => hits.forEach(hit => createNode(hit))),
-    fetchHits('magazine').then(hits => hits.forEach(hit => createNode(hit))),
-    fetchHits('navigation').then(hits => hits.forEach(hit => createNode(hit))),
-    fetchHits('staticblocks').then(hits => hits.forEach(hit => createNode(hit))),
-  ])
+  // await Promise.all([
+  //   fetchHits('pages').then(hits => hits.forEach(hit => createNode(hit))),
+  //   fetchHits('magazine').then(hits => hits.forEach(hit => createNode(hit))),
+  //   fetchHits('navigation').then(hits => hits.forEach(hit => createNode(hit))),
+  //   fetchHits('staticblocks').then(hits => hits.forEach(hit => createNode(hit))),
+  // ])
+
+  await fetchCategories().then(hits => hits.forEach(hit => createNode(hit)))
 }
