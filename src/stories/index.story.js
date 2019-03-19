@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { storiesOf } from '@storybook/react';
+import createStory from 'storybook/createStory'
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
 
@@ -8,11 +8,9 @@ import { Button, Welcome } from '@storybook/react/demo';
 
 import {create, text, boolean, constant} from '../storybook/customAddons/knobs'
 
-storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
+createStory('Test', module)
 
-storiesOf('Test', module)
-
-.add('Builder', create(Button, [
+.addX('Builder', create(Button, [
     text('gridArea', 'Grid-Area', 'Button'),
     text('link', 'Link', '/home'),
     text('label', 'Label', 'Zur Homepage'),

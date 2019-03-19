@@ -4,6 +4,8 @@ import getParam from 'utils/getParameterByName'
 addons.register('addon:contenful', api => {
   const channel = addons.getChannel()
 
+  console.log('register')
+
   let result = {
     id: getParam('cf-id'),
     path: '',
