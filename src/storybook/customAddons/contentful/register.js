@@ -5,8 +5,7 @@ addons.register('addon:contenful', api => {
   const channel = addons.getChannel()
 
   let result = {
-    // id: getParam('cf-id'),
-    id: 'abc',
+    id: getParam('cf-id'),
     path: '',
     kind: '',
     name: '',
