@@ -4,7 +4,7 @@ import getParam from 'utils/getParameterByName'
 addons.register('addon:contenful', api => {
   const channel = addons.getChannel()
 
-  console.log('register')
+  window.addEventListener('message', console.log)
 
   let result = {
     id: getParam('cf-id'),
@@ -21,7 +21,18 @@ addons.register('addon:contenful', api => {
   }
 
   channel.on('addon:contenful:set_component', (name, props) => {
-    Object.assign(result, { name, props, search: window.location.search })
+    const path = getParam('path')
+    let allProps = api.getQueryParam('all-props')
+    if(!allProps) return
+    allProps = JSON.parse(allProps)
+    Object.assign(result, { 
+      name, 
+      props, 
+      search: `?path=${path}&`+allProps.map(key => {
+        const val = api.getQueryParam('prop-'+key)
+        return `prop-${key}=${encodeURIComponent(val)}`
+      }).join('&')
+    })
     console.log('cf SET_COMPONENT', result)
     window.parent.postMessage(result, '*')
   })

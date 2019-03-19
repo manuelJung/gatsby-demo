@@ -45,7 +45,7 @@ export default class Panel extends React.Component {
     }, {}))
 
     this.props.api.setQueryParams({
-      'all-props': JSON.stringify(Object.keys(this.state.knobs))
+      'all-props': JSON.stringify(knobs.map(k => k.prop))
     })
 
     // set new params
