@@ -21,6 +21,7 @@ storiesOf('Test', module)
     constant('manualcpc', 'manualcpc', ''),
     constant('e1', 'e1', ''),
     constant('e2', 'e2', ''),
-    constant('e3', 'e3', '')
+    constant('e3', 'e3', ''),
+    text('children', 'Content', 'Text')
 ]))
 

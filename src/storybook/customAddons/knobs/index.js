@@ -14,8 +14,10 @@ export const constant = (prop, label, value, opts) => ({prop, label, value, ...o
 export const drafttext = (prop, label, value, opts) => ({prop, label, value, ...opts, type: types.DRAFTTEXT})
 
 export const create = (Component, knobs) => context => (
-  <Component {...knobs.reduce((p,n) => {
-    objPath.set(p, n.prop, manager.getKnob({...n, ...context}))
-    return p
-  }, {})} />
+  <Component
+    {...knobs.reduce((p,n) => {
+      objPath.set(p, n.prop, manager.getKnob({...n, ...context}))
+      return p
+    }, {})}
+  />
 )
