@@ -18,6 +18,7 @@ exports.createPages = async ({graphql, actions}) => {
       edges {
         node {
           slug
+          story
           childs {
             slug
             childs {
@@ -28,12 +29,23 @@ exports.createPages = async ({graphql, actions}) => {
       }
     }
   }`)
+
+  // query story content
+  // const storyRequests = await Promise.all(gq.data.categories.edges.map(edge => {
+  //   const story = edge.node.story
+  //   return Promise.all(story.REQUESTS.map(([id, query]) => Promise.all([id, graphql(query)])))
+  // }))
+
+  // create category pages
   gq.data.categories.edges.forEach(edge => {
     let context = { slug: edge.node.slug, lv1: edge.node.slug }
     actions.createPage({
       path: context.lv1,
       component: path.resolve(__dirname, 'src/templates/Page.js'),
-      context
+      context: {
+        ...context, 
+        // storyRequests: edge.node.story.COMPONENTS.map(Daki)
+      }
     })
     edge.node.childs && edge.node.childs.forEach(node => {
       context = { ...context, lv2: node.slug, slug: node.slug }
