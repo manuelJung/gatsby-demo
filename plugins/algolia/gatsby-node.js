@@ -3,6 +3,28 @@ var algoliasearchHelper = require('algoliasearch-helper')
 var crypto = require('crypto')
 var fetchCategories = require('./categories')
 
+function transformStory(story){
+  return {
+    dict: {
+      '123456': {
+        name: 'MyComponent',
+        id: '123456',
+        props: { foo: "bar" }
+      }
+    },
+    grids: {
+      MOBILE_M: {
+        components: ['123456'],
+        css: `
+          grid: "MyComponent" auto
+              / 1fr;
+          grid-gap: 20px;
+        `
+      }
+    }
+  }
+}
+
 
 // var client = algoliasearch('08VQW969UU', 'bb368529fd7609c7d79f44a58191b35f')
 var client = algoliasearch('0BYMLMXGLI', '7058207f486c5d9c0a0e2d31fd10e7e5')
@@ -12,35 +34,40 @@ const fetchHits = index => {
     hitsPerPage: 1000,
     attributesToHighlight: []
   })
-  return helper.searchOnce()
-    .then(result => result.content.hits)
-    .then(hits => hits.map(hit => Object.assign({}, hit, {
-      id: hit.objectID,
-      parent: null, // or null if it's a source node without a parent
-      children: [],
-      internal: {
-        type: index,
-        contentDigest: crypto
-          .createHash(`md5`)
-          .update(JSON.stringify(hit))
-          .digest(`hex`),
-        // mediaType: `text/markdown`, // optional
-        // content: JSON.stringify(fieldData), // optional
-        // description: `Cool Service: "Title of entry"`, // optional
-      }
-    })))
+  return helper.searchOnce().then(result => result.content.hits)
 }
 
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions
   // Create nodes here, generally by downloading data
   // from a remote API.
-  // await Promise.all([
-  //   fetchHits('pages').then(hits => hits.forEach(hit => createNode(hit))),
-  //   fetchHits('magazine').then(hits => hits.forEach(hit => createNode(hit))),
-  //   fetchHits('navigation').then(hits => hits.forEach(hit => createNode(hit))),
-  //   fetchHits('staticblocks').then(hits => hits.forEach(hit => createNode(hit))),
-  // ])
+  const [pages /*, magazine, navigation, staticblocks, categories*/ ] = await Promise.all([
+    fetchHits('pages'),
+    // fetchHits('magazine'),
+    // fetchHits('navigation'),
+    // fetchHits('staticblocks'),
+    // fetchInitialCategories()
+  ])
 
-  await fetchCategories().then(hits => hits.forEach(hit => createNode(hit)))
+  // create pages
+  pages.forEach(page => {
+    // story must be json to not be formatted
+    page.story = JSON.stringify(transformStory(page.story))
+
+    let meta = {}
+    const json = JSON.stringify(page)
+
+    meta.id = page.objectID
+    meta.parent = null
+    meta.children = []
+    meta.internal = {
+      type: 'pages',
+      contentDigest: crypto.createHash(`md5`).update(json).digest(`hex`),
+      mediaType: `application/json`,
+      content: json,
+      description: `Page (${page.title})` 
+    }
+
+    createNode({...page, ...meta})
+  })
 }

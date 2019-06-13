@@ -1,4 +1,5 @@
 var path = require('path')
+var requestPaths = require('./src/storybook/requests')
 /**
  * Implement Gatsby's Node APIs in this file.
  *
@@ -14,54 +15,44 @@ var path = require('path')
 exports.createPages = async ({graphql, actions}) => {
   // create category pages
   const gq = await graphql(`{
-    categories:allContentfulProductCategories(filter: {root: {eq: true}}){
-      edges {
-        node {
-          slug
-          story
-          childs {
-            slug
-            childs {
-              slug
-            }
-          }
-        }
+    pages:allPages {
+      nodes {
+        title
+        objectID
+        urlKey
+        story
       }
     }
   }`)
 
-  // query story content
-  // const storyRequests = await Promise.all(gq.data.categories.edges.map(edge => {
-  //   const story = edge.node.story
-  //   return Promise.all(story.REQUESTS.map(([id, query]) => Promise.all([id, graphql(query)])))
-  // }))
-
-  // create category pages
-  gq.data.categories.edges.forEach(edge => {
-    let context = { slug: edge.node.slug, lv1: edge.node.slug }
-    actions.createPage({
-      path: context.lv1,
-      component: path.resolve(__dirname, 'src/templates/Page.js'),
-      context: {
-        ...context, 
-        // storyRequests: edge.node.story.COMPONENTS.map(Daki)
-      }
+  // extract storybook requests
+  let requests = {}
+  let pending = []
+  gq.data.pages.nodes.slice(0,1).forEach(page => {
+    const story = JSON.parse(page.story)
+    Object.values(story.dict).forEach(component => {
+      const path = requestPaths[component.name]
+      if(!path) return 
+      const request = require(path)
+      pending.push([component.id, request(graphql, component.props)])
     })
-    edge.node.childs && edge.node.childs.forEach(node => {
-      context = { ...context, lv2: node.slug, slug: node.slug }
-      actions.createPage({
-        path: `${context.lv1}/${context.lv2}`,
-        component: path.resolve(__dirname, 'src/templates/Page.js'),
-        context
-      })
-      node.childs && node.childs.map(node => {
-        context = { ...context, lv3: node.slug, slug: node.slug }
-        actions.createPage({
-          path: `${context.lv1}/${context.lv2}/${context.lv3}`,
-          component: path.resolve(__dirname, 'src/templates/Page.js'),
-          context
-        })
-      })
+  })
+
+  const pendingResolved = await Promise.all(pending.map(row => row[1]))
+  pendingResolved.forEach((result,i) => {requests[pending[i][0]]=result})
+
+  gq.data.pages.nodes.forEach(page => {
+    page.story = JSON.parse(page.story)
+    const initialReduxStates = {}
+    const storyRequests = {}
+
+    // get requests
+    Object.keys(page.story.dict).forEach(id => storyRequests[id] = requests[id])
+
+    actions.createPage({
+      path: `page/${page.urlKey}/`,
+      component: path.resolve(__dirname, 'src/templates/Page.js'),
+      context: { page, initialReduxStates, storyRequests }
     })
   })
 }
