@@ -1,4 +1,3 @@
-var crypto = require('crypto')
 var fetch = require('node-fetch')
 
 
@@ -45,5 +44,4 @@ function parseNavigation (data) {
 module.exports = async function fetchNavigation(){
   const data = await fetch("https://s3.eu-central-1.amazonaws.com/wucu-at-initialstate-dev/HeaderMainNavigation.json").then(res => res.json())
   return parseNavigation(data)
-  return []
 }
