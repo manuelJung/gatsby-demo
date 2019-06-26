@@ -1,7 +1,7 @@
 var algoliasearch = require('algoliasearch')
 var algoliasearchHelper = require('algoliasearch-helper')
 var crypto = require('crypto')
-var fetchCategories = require('./categories')
+var fetchNavigation = require('./navigation')
 
 function transformStory(story){
   return {
@@ -41,12 +41,12 @@ exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions
   // Create nodes here, generally by downloading data
   // from a remote API.
-  const [pages /*, magazine, navigation, staticblocks, categories*/ ] = await Promise.all([
+  const [pages, navigation ] = await Promise.all([
     fetchHits('pages'),
     // fetchHits('magazine'),
     // fetchHits('navigation'),
     // fetchHits('staticblocks'),
-    // fetchInitialCategories()
+    fetchNavigation()
   ])
 
   // create pages
@@ -69,5 +69,23 @@ exports.sourceNodes = async ({ actions }) => {
     }
 
     createNode({...page, ...meta})
+  })
+
+  navigation.forEach(nav => {
+    let meta = {}
+    const json = JSON.stringify(nav)
+
+    meta.id = nav.id
+    meta.parent = null
+    meta.children = []
+    meta.internal = {
+      type: 'navigation',
+      contentDigest: crypto.createHash(`md5`).update(json).digest(`hex`),
+      mediaType: `application/json`,
+      content: json,
+      description: `Navigation (${nav.label})` 
+    }
+
+    createNode({...nav, ...meta})
   })
 }
