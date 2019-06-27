@@ -1,5 +1,9 @@
+let hasWindow
+try {if(window) hasWindow = true}
+catch(e) {hasWindow=false}
+
 export default function getParameterByName(name, url, inHash) {
-  if (!url) url = window.location.href;
+  if (!url) url = (hasWindow && window.location.href) || '';
   name = name.replace(/[[\]]/g, "\\$&");
   var regex = new RegExp((inHash ? "[#&]" : "[?&]") + name + "(=([^&#]*)|&|#|$)"),
       results = regex.exec(url);

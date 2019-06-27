@@ -112,13 +112,17 @@ export type Event = AddRuleEvent
 const events:Event[] = []
 let listeners = []
 
+let hasWindow
+try { if(window) hasWindow = true }
+catch (e) { hasWindow = false }
+
 if(process.env.NODE_ENV === 'development') {
-  window.__addRulesetEventListener = (cb:Function,sendPrevEvents?:boolean) => {
+  if(hasWindow) window.__addRulesetEventListener = (cb:Function,sendPrevEvents?:boolean) => {
     if(sendPrevEvents) events.forEach(e => cb(e))
     listeners.push(cb)
     return () => { listeners = listeners.filter(fn => fn !== cb) }
   }
-  window.__getRulesetEvents = () => events
+  if(hasWindow) window.__getRulesetEvents = () => events
 }
 
 function dispatch<E:*>(event:E):E{

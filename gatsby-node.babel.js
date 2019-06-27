@@ -1,3 +1,4 @@
+import {store} from 'store/bootstrap'
 var path = require('path')
 var requestPaths = require('./src/storybook/requests')
 var reducer = require('./src/modules/storefinder/reducer')
@@ -14,6 +15,8 @@ export async function createPages ({graphql, actions}) {
       }
     }
   }`)
+
+  console.log(JSON.stringify(store.getState(),null,2))
 
   // extract storybook requests
   let requests = {}

@@ -5,6 +5,4 @@ require("babel-register")({
 require('babel-polyfill')
 const node = require('./gatsby-node.babel')
 
-console.log(node.createPages)
-
 exports.createPages = node.createPages
