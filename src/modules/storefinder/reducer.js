@@ -1,4 +1,4 @@
-
+import './rules'
 
 type State = {
   isFetching: boolean,
