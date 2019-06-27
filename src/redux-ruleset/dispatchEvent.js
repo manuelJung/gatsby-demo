@@ -33,18 +33,18 @@ export default function dispatchEvent (action:Action, store:Store, cb?:(action:A
   const ruleExeId = getRuleExecutionId()
   let instead = false
 
-  if(process.env.NODE_ENV === 'development'){
-    devTools.execActionStart(execId, ruleExeId, action)
-    if(!cycle.waiting){
-      cycle.waiting = true
-      requestAnimationFrame(() => {
-        cycle.waiting = false
-        cycle.step = 0
-      })
-    }
-    if(cycle.step > 1000) console.warn('detected endless cycle with action', action)
-    if(cycle.step > 1010) throw new Error('detected endless cycle')
-  }
+  // if(process.env.NODE_ENV === 'development'){
+  //   devTools.execActionStart(execId, ruleExeId, action)
+  //   if(!cycle.waiting){
+  //     cycle.waiting = true
+  //     requestAnimationFrame(() => {
+  //       cycle.waiting = false
+  //       cycle.step = 0
+  //     })
+  //   }
+  //   if(cycle.step > 1000) console.warn('detected endless cycle with action', action)
+  //   if(cycle.step > 1010) throw new Error('detected endless cycle')
+  // }
 
   ruleDB.forEachRuleContext('INSTEAD', action.type, context => {
     if(instead) return

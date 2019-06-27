@@ -1,13 +1,12 @@
 // @flow
 import {addRule} from 'redux-ruleset'
-import * as t from '../entities'
 import * as a from '../actions'
 import useConnect from 'utils/useConnect'
 
 export type Props = {}
 
 export type InjectedProps = {
-  data: t.string | null,
+  data: string | null,
   isFetching: boolean,
   fetchError: null | string,
   shouldFetch: boolean
@@ -28,7 +27,7 @@ const mergeProps = (sp,dp,props) => Object.assign({}, sp, dp)
 
 const options = { areStatesEqual: (a,b) => a.storefinder === b.storefinder }
 
-export default function useListRequest(props:Props):InjectedProps{
+export default function useStorefinder(props:Props):InjectedProps{
   const hook = useConnect/*::<Props, InjectedProps,*,*>*/(props, mapState, mapDispatch, mergeProps, options)
 
   React.useEffect(() => {
@@ -38,27 +37,17 @@ export default function useListRequest(props:Props):InjectedProps{
   return hook
 }
 
-
-function useStorefinder (props) {
-  const hook = useConnect()
-
-  React.useEffect(() => {
-    if(hook.shouldFetch) hook.fetch()
-  })
-
-  return hook
-}
-
 useStorefinder.preload = function (store, props) {
-  store.dispatch(a.fetch(props.identifier))
+  store.dispatch(a.fetchRequest(props.identifier))
   
   return new Promise((resolve,reject) => {
     addRule({
       id: 'useStorefinder',
-      target: [at.FETCH_SUCCESS, at.FETCH_FAILURE],
+      target: ['storefinder/FETCH_SUCCESS', 'storefinder/FETCH_FAILURE'],
+      addOnce: true,
       consequence: ({action}) => {
-        if(action.type === at.FETCH_FAILURE) reject()
-        else resolve()
+        if(action.type === 'storefinder/FETCH_FAILURE') reject('reject')
+        else resolve('resolve')
       }
     })
   })

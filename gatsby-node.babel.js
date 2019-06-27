@@ -16,8 +16,6 @@ export async function createPages ({graphql, actions}) {
     }
   }`)
 
-  console.log(JSON.stringify(store.getState(),null,2))
-
   // extract storybook requests
   let requests = {}
   let pending = []
@@ -27,7 +25,7 @@ export async function createPages ({graphql, actions}) {
       const path = requestPaths[component.name]
       if(!path) return 
       const request = require(path)
-      pending.push([component.id, request(graphql, component.props)])
+      pending.push([component.id, request({graphql, props:component.props, store})])
     })
   })
 
