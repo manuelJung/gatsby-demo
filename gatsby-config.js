@@ -12,6 +12,7 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     './plugins/algolia',
+    `gatsby-plugin-flow`,
     // {
     //   resolve: `gatsby-source-contentful`,
     //   options: {

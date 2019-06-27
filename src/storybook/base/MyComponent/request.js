@@ -11,3 +11,7 @@ module.exports = async (grapql) => {
   }`)
   return gq.data.pages.nodes.map(node => node.title).slice(0, 4)
 }
+
+async function setup ({graphql, init}) {
+
+}
