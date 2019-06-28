@@ -1,42 +1,9 @@
-var algoliasearch = require('algoliasearch')
-var algoliasearchHelper = require('algoliasearch-helper')
 var crypto = require('crypto')
 var fetchNavigation = require('./navigation')
 var fetchCategories = require('./categories')
+var transformStory = require('./utils/transformStory')
+var fetchHits = require('./utils/fetchHits')
 
-function transformStory(story){
-  return {
-    dict: {
-      '123456': {
-        name: 'MyComponent',
-        id: '123456',
-        props: { foo: "bar" }
-      }
-    },
-    grids: {
-      MOBILE_M: {
-        components: ['123456'],
-        css: `
-          grid: "MyComponent" auto
-              / 1fr;
-          grid-gap: 20px;
-        `
-      }
-    }
-  }
-}
-
-
-// var client = algoliasearch('08VQW969UU', 'bb368529fd7609c7d79f44a58191b35f')
-var client = algoliasearch('0BYMLMXGLI', '7058207f486c5d9c0a0e2d31fd10e7e5')
-
-const fetchHits = index => {
-  var helper = algoliasearchHelper(client, index, {
-    hitsPerPage: 1000,
-    attributesToHighlight: []
-  })
-  return helper.searchOnce().then(result => result.content.hits)
-}
 
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions
