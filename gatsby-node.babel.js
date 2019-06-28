@@ -33,24 +33,24 @@ export async function createPages ({graphql, actions}) {
   pendingResolved.forEach((result,i) => {requests[pending[i][0]]=result})
 
   gq.data.pages.nodes.forEach(page => {
-    page.story = JSON.parse(page.story)
+    const story = JSON.parse(page.story)
     const partialStateUpdates = []
-    const storyRequests = {}
+    const storyContext = {}
 
     // get requests
-    Object.keys(page.story.dict).forEach(id => {
+    Object.keys(story.dict).forEach(id => {
       if(requests[id] && requests[id].partialStateUpdates){
         partialStateUpdates.push(...requests[id].partialStateUpdates)
       }
-      if(requests[id] && requests[id].initialProps){
-        storyRequests[id] = requests[id].initialProps
+      if(requests[id] && requests[id].context){
+        storyContext[id] = requests[id].context
       }
     })
 
     actions.createPage({
       path: `page/${page.urlKey}/`,
       component: path.resolve(__dirname, 'src/templates/Page.js'),
-      context: { page, partialStateUpdates, storyRequests }
+      context: { story, partialStateUpdates, storyContext }
     })
   })
 }
