@@ -41,14 +41,17 @@ export default function useStorefinder(props:Props):InjectedProps{
 useStorefinder.preload = function (store, props) {
   store.dispatch(a.fetchRequest(props.identifier))
   
-  return new Promise((resolve,reject) => {
+  return new Promise(resolve => {
     addRule({
       id: 'useStorefinder',
       target: ['storefinder/FETCH_SUCCESS', 'storefinder/FETCH_FAILURE'],
       addOnce: true,
       consequence: ({action, getState}) => {
         const state = getState()
-        if(action.type === 'storefinder/FETCH_FAILURE') reject('reject')
+        if(action.type === 'storefinder/FETCH_FAILURE') {
+          console.error('ERROR: could not fetch storefinder')
+          resolve([])
+        }
         else resolve([{
           path: ['storefinder'],
           state: state.storefinder
