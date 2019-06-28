@@ -11,17 +11,18 @@ const reducers = {
 // export default () => combineReducers(reducers)
 
 export default () => function rootReducer (state, action) {
-  if(action.type === 'PARTIAL_STATE_UPDATE'){
+  if(action.type === 'PARTIAL_STATE_UPDATES'){
+    const updates = action.payload
     let newState = Object.assign({}, state)
-    let subState = newState
 
-    for(let i=0;i<action.path.length-1;i++){
-      subState[action.path[i]] = Object.assign({}, subState[action.path[i]])
-      if(i!==action.path.length) subState = subState[action.path[i]]
+    for(let update of updates){
+      let subState = newState
+      for(let i=0;i<update.path.length-1;i++){
+        subState[update.path[i]] = Object.assign({}, subState[update.path[i]])
+        if(i!==update.path.length) subState = subState[update.path[i]]
+      } 
+      subState[update.path[update.path.length-1]] = update.state
     }
-
-    subState[action.path[action.path.length-1]] = action.payload
-
     return newState
   }
   return combineReducers(reducers)(state, action)

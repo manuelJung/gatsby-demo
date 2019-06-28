@@ -42,8 +42,8 @@ export async function createPages ({graphql, actions}) {
       if(requests[id] && requests[id].partialStateUpdates){
         partialStateUpdates.push(...requests[id].partialStateUpdates)
       }
-      if(requests[id] && requests[id].props){
-        storyRequests[id] = requests[id].props
+      if(requests[id] && requests[id].initialProps){
+        storyRequests[id] = requests[id].initialProps
       }
     })
 
