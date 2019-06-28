@@ -34,16 +34,23 @@ export async function createPages ({graphql, actions}) {
 
   gq.data.pages.nodes.forEach(page => {
     page.story = JSON.parse(page.story)
-    const initialReduxStates = {}
+    const partialStateUpdates = []
     const storyRequests = {}
 
     // get requests
-    Object.keys(page.story.dict).forEach(id => storyRequests[id] = requests[id])
+    Object.keys(page.story.dict).forEach(id => {
+      if(requests[id] && requests[id].partialStateUpdates){
+        partialStateUpdates.push(...requests[id].partialStateUpdates)
+      }
+      if(requests[id] && requests[id].props){
+        storyRequests[id] = requests[id].props
+      }
+    })
 
     actions.createPage({
       path: `page/${page.urlKey}/`,
       component: path.resolve(__dirname, 'src/templates/Page.js'),
-      context: { page, initialReduxStates, storyRequests }
+      context: { page, partialStateUpdates, storyRequests }
     })
   })
 }

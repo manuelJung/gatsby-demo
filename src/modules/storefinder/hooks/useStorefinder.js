@@ -1,4 +1,5 @@
 // @flow
+import * as React from 'react'
 import {addRule} from 'redux-ruleset'
 import * as a from '../actions'
 import useConnect from 'utils/useConnect'
@@ -45,9 +46,13 @@ useStorefinder.preload = function (store, props) {
       id: 'useStorefinder',
       target: ['storefinder/FETCH_SUCCESS', 'storefinder/FETCH_FAILURE'],
       addOnce: true,
-      consequence: ({action}) => {
+      consequence: ({action, getState}) => {
+        const state = getState()
         if(action.type === 'storefinder/FETCH_FAILURE') reject('reject')
-        else resolve('resolve')
+        else resolve([{
+          path: ['storefinder'],
+          state: state.storefinder
+        }])
       }
     })
   })
