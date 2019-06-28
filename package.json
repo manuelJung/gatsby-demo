@@ -29,6 +29,7 @@
     "react-helmet": "^5.2.0",
     "react-icons": "^3.5.0",
     "react-simplemde-editor": "^4.0.0",
+    "showdown": "^1.9.0",
     "storybook": "^1.0.0",
     "styled-components": "^4.1.3"
   },
