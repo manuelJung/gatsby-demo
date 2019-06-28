@@ -13,6 +13,7 @@ module.exports = {
     `gatsby-plugin-sharp`,
     './plugins/algolia',
     `gatsby-plugin-flow`,
+    `gatsby-plugin-catch-links`,
     'gatsby-plugin-resolve-src',
     // {
     //   resolve: `gatsby-source-contentful`,
