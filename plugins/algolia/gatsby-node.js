@@ -6,7 +6,8 @@ var fetchHits = require('./utils/fetchHits')
 
 
 exports.sourceNodes = async ({ actions }) => {
-  const { createNode } = actions
+  const { createNode, createFieldExtension } = actions
+
   // Create nodes here, generally by downloading data
   // from a remote API.
   const [pages, navigation, categories ] = await Promise.all([

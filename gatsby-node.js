@@ -6,3 +6,7 @@ require('babel-polyfill')
 const node = require('./gatsby-node.babel')
 
 exports.createPages = node.createPages
+exports.createSchemaCustomization = node.createSchemaCustomization
+
+
+

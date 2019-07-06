@@ -1,4 +1,5 @@
 import {store} from 'store/bootstrap'
+import { GraphQLJSON } from "gatsby/graphql"
 var path = require('path')
 var requestPaths = require('./src/storybook/requests')
 var reducer = require('./src/modules/storefinder/reducer')
@@ -53,4 +54,28 @@ export async function createPages ({graphql, actions}) {
       context: { story, partialStateUpdates, storyContext }
     })
   })
+}
+
+export const createSchemaCustomization = ({ actions, cache }) => {
+  const { createFieldExtension, createTypes } = actions
+  createFieldExtension({
+    name: 'Story',
+    extend: () => ({
+      resolve: async (source, args, context, info) => {
+        // const cached = await cache.get('some-data')
+        // if(cached) return cached
+        if(!source.story) return null
+        const story = JSON.parse(source.story)
+        // await cache.set('some-data', story)
+        return story
+      }
+    })
+  })
+
+  const typeDefs = `
+    type pages implements Node {
+      story: JSON @Story
+    }
+  `
+  createTypes(typeDefs)
 }
