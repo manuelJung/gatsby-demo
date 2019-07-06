@@ -2,11 +2,10 @@ import * as React from 'react'
 import * as components from 'storybook/components'
 
 type Props = {
-  story: mixed,
-  storyContext: {[id:string]:mixed}
+  story: mixed
 }
 
-export default function Story ({story, storyContext}:Props) {
+export default function Story ({story}:Props) {
   return (
     <div className='Story'>
       {story.grids.MOBILE_M.components.map(id => story.dict[id]).map(({id,name,props}) => {
@@ -14,7 +13,7 @@ export default function Story ({story, storyContext}:Props) {
 
         if(!Component) return <h1>Component "{name}" not found</h1>
 
-        return <Component key={id} {...props} context={storyContext[id]}/>
+        return <Component key={id} {...props}/>
       })}
     </div>
   )

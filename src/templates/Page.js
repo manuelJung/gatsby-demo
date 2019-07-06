@@ -2,19 +2,27 @@ import React from 'react'
 import Redux from 'containers/Redux'
 import Story from 'storybook/Story'
 import { Link } from "gatsby"
+import { graphql } from "gatsby"
 
 export default (props) => {
-  const {partialStateUpdates, story, storyContext} = props.pageContext
   console.log(props)
   return (
-    <Redux partialStateUpdates={partialStateUpdates}>
+    <Redux partialStateUpdates={props.data.page.story.partialStateUpdates}>
       <h1>Page</h1>
       <p>
         <Link to='page/aktuelle-Trends'>trends</Link>
         -
         <Link to='page/looks'>looks</Link>
       </p>
-      <Story story={story} storyContext={storyContext}/>
+      <Story story={props.data.page.story}/>
     </Redux>
   )
 }
+
+export const query = graphql`
+  query($urlKey: String!) {
+    page (urlKey: {eq: $urlKey}){
+      story
+    }
+  }
+`
