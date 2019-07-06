@@ -13,4 +13,4 @@ const converter = new Converter({
   ]
 })
 
-module.makeHtml = converter.makeHtml
+export const makeHtml = markdown => converter.makeHtml(markdown)

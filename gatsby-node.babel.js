@@ -1,6 +1,7 @@
 import {store} from 'store/bootstrap'
 import { GraphQLJSON } from "gatsby/graphql"
 import {fetchHits} from './algolia'
+import preprocessStory from 'storybook/preprocessStory'
 var crypto = require('crypto')
 var path = require('path')
 var requestPaths = require('./src/storybook/requests')
@@ -68,11 +69,11 @@ export const createSchemaCustomization = ({ actions, cache }) => {
     name: 'Story',
     extend: () => ({
       resolve: async (source, args, context, info) => {
-        // const cached = await cache.get('some-data')
+        // const cached = await cache.get(source.objectID)
         // if(cached) return cached
         if(!source.story) return null
-        const story = source.story
-        // await cache.set('some-data', story)
+        const story = preprocessStory(source.story, {cache})
+        // await cache.set(source.objectID, story)
         return story
       }
     })
