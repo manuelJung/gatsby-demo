@@ -12,7 +12,7 @@ export default function Story ({story}:Props) {
       {story.grids.MOBILE_M.components.map(id => story.dict[id]).map(({id,name,props}) => {
         const Component = components[name]
 
-        if(!Component) return <h1>Component "{name}" not found</h1>
+        if(!Component) return <h1 key={id}>Component "{name}" not found</h1>
 
         return <Component key={id} {...props}/>
       })}
