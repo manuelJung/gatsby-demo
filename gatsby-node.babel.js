@@ -2,10 +2,8 @@ import {store} from 'store/bootstrap'
 import { GraphQLJSON } from "gatsby/graphql"
 import {fetchHits} from './algolia'
 import preprocessStory from 'storybook/preprocessStory'
-var crypto = require('crypto')
-var path = require('path')
-var requestPaths = require('./src/storybook/requests')
-var reducer = require('./src/modules/storefinder/reducer')
+import crypto from 'crypto'
+import path from 'path'
 
 export async function createPages ({graphql, actions}) {
   // create category pages
