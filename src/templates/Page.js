@@ -5,7 +5,7 @@ import { Link } from "gatsby"
 import { graphql } from "gatsby"
 
 export default (props) => {
-  console.log(props)
+  // console.log(props)
 
   return (
     <Redux partialStateUpdates={null /*props.data.page.story.partialStateUpdates*/}>

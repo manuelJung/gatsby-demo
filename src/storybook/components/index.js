@@ -2,3 +2,4 @@
 export {default as Text} from './Text'
 export {default as Image} from './Image'
 export {default as ImageWithLinks} from './ImageWithLinks'
+export {default as TextWithImage} from './TextWithImage'
