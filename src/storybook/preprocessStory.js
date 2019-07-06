@@ -10,7 +10,7 @@ export default async function preprocessStory (rawStory, {cache}) {
     const request = getRequest(component.name)
     if(request){
       if(request.preprocessProps){
-        const newProps = await request.preprocessProps(component.props)
+        const newProps = await request.preprocessProps({props: component.props, cache})
         component.props = newProps
       }
       if(request.createPartialStateUpdates){
@@ -18,7 +18,7 @@ export default async function preprocessStory (rawStory, {cache}) {
         story.partialStateUpdates.push(...partialStateUpdates)
       }
       if(request.createContext){
-        const context = await request.createContext(component.props)
+        const context = await request.createContext({props: component.props, cache})
         component.props.context = context
       }
     }

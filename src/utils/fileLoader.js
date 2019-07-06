@@ -20,7 +20,6 @@ export const getFilePath = url => {
 }
 
 async function download (url, path) {
-  console.log('___PATH___', path)
   const res = await fetch(url)
   const fileStream = fs.createWriteStream(path)
   await new Promise((resolve, reject) => {
