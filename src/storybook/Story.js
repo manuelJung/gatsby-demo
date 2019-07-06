@@ -6,6 +6,7 @@ type Props = {
 }
 
 export default function Story ({story}:Props) {
+  if(!story) return null
   return (
     <div className='Story'>
       {story.grids.MOBILE_M.components.map(id => story.dict[id]).map(({id,name,props}) => {

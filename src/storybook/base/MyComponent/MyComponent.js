@@ -5,7 +5,7 @@ import useStorefinder from 'modules/storefinder/hooks/useStorefinder'
 export default function MyComponent (props) {
   const storefinder = useStorefinder()
 
-  console.log(props)
+  // console.log(props)
 
   if(storefinder.isFetching) return <h1>loading...</h1>
 

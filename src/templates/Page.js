@@ -5,9 +5,10 @@ import { Link } from "gatsby"
 import { graphql } from "gatsby"
 
 export default (props) => {
-  console.log(props)
+  // console.log(props)
+
   return (
-    <Redux partialStateUpdates={props.data.page.story.partialStateUpdates}>
+    <Redux partialStateUpdates={null /*props.data.page.story.partialStateUpdates*/}>
       <h1>Page</h1>
       <p>
         <Link to='page/aktuelle-Trends'>trends</Link>
