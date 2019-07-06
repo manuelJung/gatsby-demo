@@ -5,6 +5,8 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "algolia": "0.0.0",
+    "algoliasearch-helper": "^2.28.0",
     "babel-plugin-styled-components": "^1.10.0",
     "babel-preset-gatsby-package": "^0.1.4",
     "core-js": "^2.6.5",

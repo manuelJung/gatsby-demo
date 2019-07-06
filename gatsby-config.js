@@ -11,7 +11,6 @@ module.exports = {
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
-    './plugins/algolia',
     `gatsby-plugin-flow`,
     `gatsby-plugin-catch-links`,
     'gatsby-plugin-resolve-src',
