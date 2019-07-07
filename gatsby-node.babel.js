@@ -1,6 +1,6 @@
 import {store} from 'store/bootstrap'
 import { GraphQLJSON } from "gatsby/graphql"
-import {fetchHits} from './algolia'
+import {fetchHits, fetchNavigation, fetchCategories} from './algolia'
 import preprocessStory from 'storybook/preprocessStory'
 import crypto from 'crypto'
 import path from 'path'
@@ -73,6 +73,9 @@ export const createSchemaCustomization = ({ actions, cache }) => {
     type StaticBlock implements Node {
       story: JSON @Story
     }
+    type Category implements Node {
+      story: JSON @Story
+    }
   `
   createTypes(typeDefs)
 }
@@ -84,10 +87,12 @@ export const createSchemaCustomization = ({ actions, cache }) => {
 export const sourceNodes = async ({ actions }) => {
   const { createNode } = actions
 
-  const [pages, magazineArticles, staticBlocks] = await Promise.all([
+  const [pages, magazineArticles, staticBlocks, navigation, categories] = await Promise.all([
     fetchHits('pages'),
     fetchHits('magazine'),
-    fetchHits('staticblocks')
+    fetchHits('staticblocks'),
+    fetchNavigation(),
+    fetchCategories()
   ])
 
   pages.forEach(page => {
@@ -153,5 +158,53 @@ export const sourceNodes = async ({ actions }) => {
     }
 
     createNode({...block, ...meta})
+  })
+
+  navigation.forEach(nav => {
+    let meta = {}
+    const json = JSON.stringify(nav)
+
+    meta.id = nav.id
+    meta.parent = null
+    meta.children = []
+    meta.internal = {
+      type: 'Navigation',
+      contentDigest: crypto.createHash(`md5`).update(json).digest(`hex`),
+      mediaType: `application/json`,
+      content: json,
+      description: `Navigation (${nav.label})` 
+    }
+
+    createNode({...nav, ...meta})
+  })
+
+  categories.forEach(cat => {
+    // resolve conflicts
+    cat.useStory = Boolean(cat.useStory)
+    cat.useEnhancedStory = Boolean(cat.useEnhancedStory)
+    cat.hideProducts = Boolean(cat.hideProducts)
+    cat.categoryLevel = cat.categoryLevel || null
+    cat.story = cat.story || null
+
+    // relations
+    cat.parentCategory___NODE = cat.parentId
+    cat.childCategories___NODE = cat.childIds
+
+
+    let meta = {}
+    const json = JSON.stringify(cat)
+
+    meta.id = cat.objectID
+    meta.parent = null
+    meta.children = []
+    meta.internal = {
+      type: 'Category',
+      contentDigest: crypto.createHash(`md5`).update(json).digest(`hex`),
+      mediaType: `application/json`,
+      content: json,
+      description: `Category (${cat.label})` 
+    }
+
+    createNode({...cat, ...meta})
   })
 }
