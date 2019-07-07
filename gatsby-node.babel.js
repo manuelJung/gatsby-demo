@@ -20,6 +20,11 @@ export async function createPages ({graphql, actions}) {
     }
   }`)
 
+  actions.createPage({
+    path: `/`,
+    component: path.resolve(__dirname, 'src/templates/Homepage.js')
+  })
+
 
   gq.data.pages.nodes.forEach(page => {
     actions.createPage({
@@ -65,6 +70,9 @@ export const createSchemaCustomization = ({ actions, cache }) => {
     type MagazineArticle implements Node {
       story: JSON @Story
     }
+    type StaticBlock implements Node {
+      story: JSON @Story
+    }
   `
   createTypes(typeDefs)
 }
@@ -76,9 +84,10 @@ export const createSchemaCustomization = ({ actions, cache }) => {
 export const sourceNodes = async ({ actions }) => {
   const { createNode } = actions
 
-  const [pages, magazineArticles] = await Promise.all([
+  const [pages, magazineArticles, staticBlocks] = await Promise.all([
     fetchHits('pages'),
-    fetchHits('magazine')
+    fetchHits('magazine'),
+    fetchHits('staticblocks')
   ])
 
   pages.forEach(page => {
@@ -126,5 +135,23 @@ export const sourceNodes = async ({ actions }) => {
     }
 
     createNode({...article, ...meta})
+  })
+
+  staticBlocks.forEach(block => {
+    let meta = {}
+    const json = JSON.stringify(block)
+
+    meta.id = block.objectID
+    meta.parent = null
+    meta.children = []
+    meta.internal = {
+      type: 'StaticBlock',
+      contentDigest: crypto.createHash(`md5`).update(json).digest(`hex`),
+      mediaType: `application/json`,
+      content: json,
+      description: `StaticBlock (${block.title})`
+    }
+
+    createNode({...block, ...meta})
   })
 }
