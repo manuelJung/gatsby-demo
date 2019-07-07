@@ -28,7 +28,7 @@ export default async function preprocessStory (rawStory, {cache}) {
 
   story.grids = {
     MOBILE_M: {
-      components: rawStory.GRID.MOBILE_M.components.map(gridName => byGridName[gridName]),
+      components: rawStory.GRID.MOBILE_M.components.map(gridName => byGridName[gridName]).filter(_ => _),
       css: rawStory.GRID.MOBILE_M.content + ';\ngrid-gap:' + rawStory.GRID_GAP.MOBILE_M + 'px;'
     }
   }
