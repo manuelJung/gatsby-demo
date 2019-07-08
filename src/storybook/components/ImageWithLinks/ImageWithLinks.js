@@ -7,7 +7,7 @@ import * as React from 'react'
 export default function ImageWithLinks ({src}) {
   return (
     <div className='Image'>
-      <h3>IMAGE-WITH-LINKS {src}</h3>
+      <h3>IMAGE-WITH-LINKS</h3>
     </div>
   )
 }
