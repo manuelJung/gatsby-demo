@@ -32,13 +32,13 @@ export default function Story ({story}:Props) {
 
 const Wrapper = styled.section`
   display: grid;
-  > .CmsWrapper{display:none}
+  
   ${props => props.grids.MOBILE_M}
-  @media (min-width: 375px) { > .CmsWrapper{display:none} ${props => props.grids.MOBILE_L} }
-  @media (min-width: 525px) { > .CmsWrapper{display:none} ${props => props.grids.TABLET} }
-  @media (min-width: 768px) { > .CmsWrapper{display:none} ${props => props.grids.LAPTOP} }
-  @media (min-width: 990px) { > .CmsWrapper{display:none} ${props => props.grids.LAPTOP_L} }
-  @media (min-width: 1200px) { > .CmsWrapper{display:none} ${props => props.grids.LAPTOP_XL} }
+  @media (min-width: 375px) { ${props => props.grids.MOBILE_L} }
+  @media (min-width: 525px) { ${props => props.grids.TABLET} }
+  @media (min-width: 768px) { ${props => props.grids.LAPTOP} }
+  @media (min-width: 990px) { ${props => props.grids.LAPTOP_L} }
+  @media (min-width: 1200px) { ${props => props.grids.LAPTOP_XL} }
 
   margin: 0 auto;
 
