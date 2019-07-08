@@ -15,7 +15,7 @@ type Props = {
   ratioSubtitle: string
 }
 
-export default function Banner (props:Pros) {
+export default function Banner (props:Props) {
   return (
     <Wrapper className='Banner'>
       <img src={props.src} alt={props.alt} />
