@@ -29,7 +29,6 @@ const Wrapper = styled.div`
   display: block;
   cursor: pointer;
   position: relative;
-  width: 100%;
 
   max-width: 300px;
 
@@ -64,6 +63,10 @@ const Wrapper = styled.div`
       @media (min-width: 1200px) {
         font-size: 1.2em;
       }
+    }
+
+    > img {
+      width: 100%;
     }
 
     > .title {
