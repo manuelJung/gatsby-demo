@@ -26,6 +26,16 @@ module.exports = {
       options: {
         // Add any options here
       },
+    },
+    {
+      resolve: `gatsby-plugin-prefetch-google-fonts`,
+      options: {
+        fonts: [
+          {
+            family: `Montserrat`
+          }
+        ],
+      },
     }
   ],
 }
