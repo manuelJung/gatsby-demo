@@ -11,7 +11,6 @@ type Props = {
 
 export default function MagazineArticleTeaserByIdWidget ({context}:Props) {
   const {categoryName, sponsoredArticle, teaserImageUrl, title} = context.article
-  console.log(context.article)
   return (
     <Wrapper className='MagazineArticleTeaserByIdWidget'>
       <div>
