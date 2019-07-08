@@ -1,21 +1,24 @@
 // @flow
 import * as React from 'react'
 import styled from 'styled-components'
+import useLazyImageSrc from 'hooks/useLazyImageSrc'
 
 type Props = {
   magazineArticleId: string,
   context: {
-    article: any
+    article: any,
+    base64: string
   }
 }
 
 export default function MagazineArticleTeaserByIdWidget ({context}:Props) {
   const {categoryName, sponsoredArticle, teaserImageUrl, title} = context.article
+  const [ref, image] = useLazyImageSrc(teaserImageUrl, context.base64)
   return (
     <Wrapper className='MagazineArticleTeaserByIdWidget'>
       <div>
         <h3>{categoryName} {sponsoredArticle && '(Anzeige)'}</h3>
-        <img src={teaserImageUrl} alt='title'/>
+        <img ref={ref} src={image} alt='title'/>
         <div className='title'>
           <div className='shaddow'/>
           <h5 className='text'>{title}</h5>

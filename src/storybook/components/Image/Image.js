@@ -1,17 +1,17 @@
 // @flow
 import * as React from 'react'
 import styled from 'styled-components'
-// import Img from 'gatsby-image'
+import useLazyImageSrc from 'hooks/useLazyImageSrc'
 
 
 
-export default function Image ({alt, src, label /*, context: {fluid}*/}) {
+export default function Image ({alt, src, label, context /*, context: {fluid}*/}) {
+  const [ref, image] = useLazyImageSrc(src, context.base64)
+
   return (
     <Wrapper className='Image'>
       <div className='image-wrapper'>
-        {/* {fluid && <Img fluid={fluid} alt={alt}/>} */}
-        {/* {fluid || <img src={src} alt={alt}/>} */}
-        <img src={src} alt={alt}/>
+        <img ref={ref} src={image} alt={alt}/>
       </div>
       {label && <div className='label'>{label}</div>}
     </Wrapper>

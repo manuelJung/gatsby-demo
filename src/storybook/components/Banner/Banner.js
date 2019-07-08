@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react'
 import styled from 'styled-components'
+import useLazyImageSrc from 'hooks/useLazyImageSrc'
 
 
 type Props = {
@@ -12,13 +13,17 @@ type Props = {
   overlayColor: string,
   overlayPosition: string,
   ratio: string,
-  ratioSubtitle: string
+  ratioSubtitle: string,
+  context: {
+    base64: string
+  }
 }
 
 export default function Banner (props:Props) {
+  const [ref, image] = useLazyImageSrc(props.src, props.context.base64)
   return (
     <Wrapper className='Banner'>
-      <img src={props.src} alt={props.alt} />
+      <img ref={ref} src={image} alt={props.alt} />
     </Wrapper>
   )
 }

@@ -1,4 +1,5 @@
 import createAlgoliaHelper from 'utils/createAlgoliaHelper'
+import toBase64 from 'utils/toBase64'
 
 export const createContext = async ({props}) => {
   const helper = createAlgoliaHelper('magazine', {
@@ -12,5 +13,7 @@ export const createContext = async ({props}) => {
   const result = await helper.searchOnce()
   const {hits} = result.content
 
-  return { article: hits[0] }
+  let base64 = await toBase64(props.src)
+
+  return { article: hits[0], base64 }
 }
