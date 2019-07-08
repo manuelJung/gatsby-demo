@@ -3,7 +3,8 @@ import createAlgoliaHelper from 'utils/createAlgoliaHelper'
 export const createContext = async ({props}) => {
   const helper = createAlgoliaHelper('magazine', {
     disjunctiveFacets: ['objectID'],
-    attributesToHighlight: []
+    attributesToHighlight: [],
+    attributesToRetrieve: ['categoryName', 'sponsoredArticle', 'teaserImageUrl', 'title']
   })
 
   helper.addDisjunctiveFacetRefinement('objectID', props.magazineArticleId)

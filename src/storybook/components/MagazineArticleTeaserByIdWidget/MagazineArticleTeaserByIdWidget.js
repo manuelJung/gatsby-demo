@@ -9,13 +9,84 @@ type Props = {
   }
 }
 
-export default function MagazineArticleTeaserByIdWidget ({context:{article}}:Props) {
-  console.log(article)
+export default function MagazineArticleTeaserByIdWidget ({context}:Props) {
+  const {categoryName, sponsoredArticle, teaserImageUrl, title} = context.article
+  console.log(context.article)
   return (
     <Wrapper className='MagazineArticleTeaserByIdWidget'>
-      MagazineArticleTeaserByIdWidget
+      <div>
+        <h3>{categoryName} {sponsoredArticle && '(Anzeige)'}</h3>
+        <img src={teaserImageUrl} alt='title'/>
+        <div className='title'>
+          <div className='shaddow'/>
+          <h5 className='text'>{title}</h5>
+        </div>
+      </div>
     </Wrapper>
   )
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  display: block;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+
+  max-width: 300px;
+
+  &:before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+  }
+
+
+  > div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    > h3 {
+      box-sizing: border-box;
+      color: white;
+      text-align: center;
+      background: #6d6e71;
+      padding: .5em;
+      margin: 0;
+      font-size: 1em;
+      position: absolute;
+      width: inherit;
+      width: 100%;
+
+      &:hover & { background: '#993452'; }
+
+      @media (min-width: 1200px) {
+        font-size: 1.2em;
+      }
+    }
+
+    > .title {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+
+      > .shaddow {
+        height: 1em;
+        background: linear-gradient(0deg,rgba(0,0,0,.4),rgba(0,0,0,0));  
+      }
+
+      > .text {
+        margin: 0;
+        color: white;
+        padding: 10px;
+        padding-top: 5px;
+        background: rgba(0,0,0,.4);
+        width: 100%;
+      }
+
+      > h5 { box-sizing: border-box; width: 100%; }
+    }
+  }
+`
