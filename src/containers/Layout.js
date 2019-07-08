@@ -8,7 +8,7 @@ type Props = {
   children: React.Node
 }
 
-export default function Layout ({children}) {
+export default function Layout ({children}:Props) {
   return (
     <Redux>
       <Header />

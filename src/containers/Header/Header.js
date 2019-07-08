@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react'
-import { useStaticQuery, graphql } from "gatsby"
+// import { useStaticQuery, graphql } from "gatsby"
 import styled from 'styled-components'
 import { IoMdMenu } from 'react-icons/io'
 import { FaUser, FaShoppingCart, FaSearch } from 'react-icons/fa'
@@ -37,7 +37,7 @@ export default function Header () {
   return (
     <Wrapper className='header'>
       <div className='logo'>
-        <img src={logo}/>
+        <img src={logo} alt='Wundercurves Logo'/>
       </div>
       <div className='icon burger-menu'><IoMdMenu/></div>
       <div className='search-form'>
