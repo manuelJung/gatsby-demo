@@ -13,6 +13,14 @@ module.exports = {
     `gatsby-plugin-catch-links`,
     'gatsby-plugin-resolve-src',
     {
+      resolve: "gatsby-plugin-preconnect",
+      options: {
+        domains: [
+          "https://res.cloudinary.com"
+        ]
+      }
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
@@ -36,6 +44,6 @@ module.exports = {
           }
         ],
       },
-    }
+    },
   ],
 }
