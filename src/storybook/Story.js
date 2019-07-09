@@ -7,7 +7,7 @@ type Props = {
 }
 
 export default function Story ({story}:Props) {
-  console.log(story)
+  // console.log(story)
   if(!story) return null
   return (
     <Wrapper className='Story' grids={story.grids}>
