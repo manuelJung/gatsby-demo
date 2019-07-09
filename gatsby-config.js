@@ -41,6 +41,9 @@ module.exports = {
         fonts: [
           {
             family: `Montserrat`
+          },
+          {
+            family: `Merriweather`
           }
         ],
       },

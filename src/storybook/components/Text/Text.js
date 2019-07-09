@@ -1,12 +1,21 @@
 // @flow
 import * as React from 'react'
+import styled from 'styled-components'
 
 type Props = {
-  children: string
+  children: string,
+  centered: boolean
 }
 
-export default function Text ({children}:Props) {
+export default function Text ({children, centered}:Props) {
   return (
-    <div className='Text' dangerouslySetInnerHTML={{__html: children}}/>
+    <Wrapper
+      className='Text' 
+      centered={centered}
+      dangerouslySetInnerHTML={{__html: children}}/>
   )
 }
+
+const Wrapper = styled.div`
+  ${props => props.centered && `text-align:center;`}
+`
