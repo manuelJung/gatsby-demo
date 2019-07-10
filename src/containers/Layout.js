@@ -2,6 +2,7 @@
 import * as React from 'react'
 import './layout.css'
 import Header from './Header'
+import Footer from './Footer'
 import Redux from './Redux'
 
 type Props = {
@@ -13,6 +14,7 @@ export default function Layout ({children}:Props) {
     <Redux>
       <Header />
       {children}
+      <Footer />
     </Redux>
   )
 }
