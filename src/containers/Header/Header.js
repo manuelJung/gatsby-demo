@@ -41,9 +41,9 @@ export default function Header () {
         <div><FaShoppingCart/> Riesige Auswahl</div>
         <div><FaRegStar/> Beratung & Inspiration</div>
       </div>
-      <div className='logo'>
+      <Link className='logo' to='/'>
         <img src={logo} alt='Wundercurves Logo'/>
-      </div>
+      </Link>
       <div className='icon burger-menu'><IoMdMenu/></div>
       <div className='search-form'>
         <input type='text'/>
