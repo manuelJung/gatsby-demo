@@ -15,13 +15,13 @@ type Props = {
 }
 
 export default function TextWithImage ({textProps, imageProps, context}:Props) {
-  const [ref, image] = useLazyImageSrc(src, context.base64)
+  const [ref, image] = useLazyImageSrc(imageProps.src, context.base64)
 
   return (
     <Wrapper className='TextWithImage'>
       <div className='image'>
         <div className='image-wrapper'>
-          <img ref={ref} src={image} alt={alt}/>
+          <img ref={ref} src={image} alt={imageProps.alt}/>
         </div>
       </div>
       <div className='text' dangerouslySetInnerHTML={{__html: textProps.children}}/>
