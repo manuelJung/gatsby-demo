@@ -7,18 +7,18 @@ import path from 'path'
 
 export async function createPages ({graphql, actions}) {
   
-  // const gq = await graphql(`{
-  //   pages:allPage {
-  //     nodes {
-  //       urlKey
-  //     }
-  //   }
-  //   magazineArticles:allMagazineArticle {
-  //     nodes {
-  //       urlKey
-  //     }
-  //   }
-  // }`)
+  const gq = await graphql(`{
+    pages:allPage {
+      nodes {
+        urlKey
+      }
+    }
+    magazineArticles:allMagazineArticle {
+      nodes {
+        urlKey
+      }
+    }
+  }`)
 
   actions.createPage({
     path: `/`,
@@ -26,13 +26,13 @@ export async function createPages ({graphql, actions}) {
   })
 
 
-  // gq.data.pages.nodes.forEach(page => {
-  //   actions.createPage({
-  //     path: `page/${page.urlKey}`,
-  //     component: path.resolve(__dirname, 'src/templates/Page.js'),
-  //     context: {urlKey: page.urlKey}
-  //   })
-  // })
+  gq.data.pages.nodes.forEach(page => {
+    actions.createPage({
+      path: `page/${page.urlKey}`,
+      component: path.resolve(__dirname, 'src/templates/Page.js'),
+      context: {urlKey: page.urlKey}
+    })
+  })
 
   // gq.data.magazineArticles.nodes.forEach(article => {
   //   actions.createPage({
