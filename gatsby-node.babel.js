@@ -6,7 +6,7 @@ import crypto from 'crypto'
 import path from 'path'
 
 export async function createPages ({graphql, actions}) {
-  // create category pages
+  
   // const gq = await graphql(`{
   //   pages:allPage {
   //     nodes {

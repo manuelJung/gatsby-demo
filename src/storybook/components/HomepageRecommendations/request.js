@@ -13,5 +13,5 @@ export const createContext = async ({props}) => {
 
   const dict = hits.reduce((p,n) => (p[n.objectID]=n)&&p, {})
 
-  return { products: props.objectIds.map(id => dict[id]) }
+  return { products: props.objectIds.map(id => dict[id]).filter(_ => _) }
 }
