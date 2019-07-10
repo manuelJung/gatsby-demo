@@ -68,26 +68,15 @@ const Wrapper = styled.header`
   padding-bottom:10px;
 
   display: grid;
-  grid: " . Logo       Logo       Logo     Logo . "
-        " . BurgerMenu SearchForm UserIcon CartIcon . " 
-        / 100px 50px       1fr        50px     50px 100px;
+  grid: " Logo       Logo       Logo     Logo "
+        " BurgerMenu SearchForm UserIcon CartIcon " 
+        / 50px       1fr        50px     50px;
   grid-gap: 5px;
 
   > .usps { grid-area: Usps; display: none; }
 
-  @media (min-width: 800px) {
-    grid: "Usps Usps Usps Usps"
-          "Logo SearchForm UserIcon CartIcon" 70px
-          "Navigation Navigation Navigation Navigation"
-          / 500px 1fr  100px  100px ;
-    grid-gap: 5px;
-
-    > .usps { display: block; }
-    > .burger-menu { display: none; }
-  }
-
   > .usps {
-    display: flex;
+    display: none;
     background: #993452;
     color: #e9bfcd;
     font-weight: bold;
@@ -138,7 +127,7 @@ const Wrapper = styled.header`
   }
 
   > nav {
-    display: flex;
+    display: none;
     grid-area: Navigation;
     background: white;
     > a {
@@ -151,4 +140,16 @@ const Wrapper = styled.header`
   > .cart-icon {grid-area: CartIcon;}
   > .user-icon {grid-area: UserIcon;}
   > .burger-menu {grid-area: BurgerMenu;}
+
+  @media (min-width: 800px) {
+    grid: "Usps Usps Usps Usps"
+          "Logo SearchForm UserIcon CartIcon" 70px
+          "Navigation Navigation Navigation Navigation"
+          / 500px 1fr  100px  100px ;
+    grid-gap: 5px;
+
+    > .usps { display: flex; }
+    > .burger-menu { display: none; }
+    > nav { display: flex; }
+  }
 `
