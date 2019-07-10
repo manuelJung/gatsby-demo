@@ -1,6 +1,10 @@
 
 
 export default async function toBase64 (url, size=16) {
+  if(!url) {
+    console.log('(toBase64) src is undefined')
+    return
+  }
   try {
     const img = await require('node-fetch')(url).then(res => res.buffer())
     const resizedImageBuf = await require('sharp')(img)
@@ -10,7 +14,7 @@ export default async function toBase64 (url, size=16) {
     return `data:image/png;base64,${resizedImageBuf.toString('base64')}`
   }
   catch(e){
-    console.log(`ERROR (toBase64): could not convert url (${url})`, e)
+    console.log(`ERROR (toBase64): ${url}`)
     return null
   }
 }
