@@ -2,6 +2,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import useLazyImageSrc from 'hooks/useLazyImageSrc'
+import {Link} from 'gatsby'
 
 type Props = {
   title: string,
@@ -19,13 +20,13 @@ export default function HomepageBrandGallery ({title, images, context}:Props) {
   return (
     <Wrapper className='HomepageBrandGallery'>
       <h3>{title}</h3>
-      <ul className='gallery'>
+      <div className='gallery'>
         {images.map((img,i) => 
-          <li key={img.src}>
+          <Link key={img.src} to={img.src}>
             <Image {...img} base64={context.base64Images[i]}/>
-          </li>
+          </Link>
         )}
-      </ul>
+      </div>
     </Wrapper>
   )
 }
@@ -36,17 +37,22 @@ function Image (props:*) {
 }
 
 const Wrapper = styled.div`
+  > h3 {
+    margin-top: 3px;
+    margin-bottom: 23px;
+    padding-bottom: 7px;
+    font-size: 15px;
+    color: rgb(85, 85, 85);
+    font-weight: 500;
+    border-bottom: 2px solid rgb(238, 236, 237);
+  }
   > .gallery {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: grid;
+    display:grid;
     grid-template-columns: repeat(4, 1fr);
     grid-column-gap:15px;
     justify-items: center;
 
-    li, img {
-        width:100%;
-    }
+    img { width:100%; }
+    a {display: block; width: 100%;}
   }
 `
