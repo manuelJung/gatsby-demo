@@ -44,10 +44,6 @@ module.exports = {
           {
             family: `Montserrat`,
             variants: ['400', '500', '700']
-          },
-          {
-            family: `Merriweather`,
-            variants: ['400', '400italic']
           }
         ],
       },
