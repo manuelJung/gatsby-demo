@@ -1,5 +1,4 @@
 import React from 'react'
-import Redux from 'containers/Redux'
 import Story from 'storybook/Story'
 import { Link } from "gatsby"
 import { graphql } from "gatsby"
