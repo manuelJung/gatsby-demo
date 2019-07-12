@@ -11,8 +11,11 @@ export default function Story ({story}:Props) {
   if(!story) return null
   return (
     <Wrapper className='Story' grids={story.grids}>
-      {Object.values(story.dict).map(({id,name,props}) => {
+      {story.components.map(id => {
+        const {name,props} = story.dict[id] || {}
         const Component = components[name]
+
+        if(!name) return null
 
         if(!Component) return (
           <NotFound className={props.gridArea + ' CmsWrapper'} gridArea={props.gridArea} key={id}>
