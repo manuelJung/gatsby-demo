@@ -7,6 +7,6 @@ function createAlgoliaHelper (index, config) {
   return algoliasearchHelper(client, index, config)
 }
 
-createAlgoliaHelper.url = algoliaSearchHelper.url
+createAlgoliaHelper.url = algoliasearchHelper.url
 
 export default createAlgoliaHelper

@@ -5,18 +5,23 @@ import {fetchHits} from './utils'
 
 type Props = {
   hitsPerPage: number,
-  initialQueryStrings: string[],
+  queryStrings: string[],
   context: {
     initialHits: any[],
     totalPages: number
   }
 }
 
-export default function CurratedSearchWidget ({hitsPerPage, initialQueryStrings, context}:Props) {
-  const [hits, page, totalPages, setPage] = useHits(hitsPerPage, initialQueryStrings, context.initialHits, context.totalPages)
+export default function CurratedSearchWidget ({hitsPerPage, queryStrings, context}:Props) {
+  const [hits, page, totalPages, setPage] = useHits(hitsPerPage, queryStrings, context.initialHits, context.totalPages)
+
+  console.log(context)
+
   return (
     <div>
       {hits.map(hit => <div key={hit.objectID}>- {hit.objectID}</div>)}
+
+      <button onClick={() => setPage(page+1)}>next</button>
     </div>
   )
 }
@@ -30,7 +35,10 @@ function useHits (hpp, queryStrings, initialHits, initialTotalPages) {
 
   // do something
   React.useEffect(() => {
-    if(isFirstRender.current) return
+    if(isFirstRender.current) {
+      isFirstRender.current = false
+      return
+    }
 
     fetchHits(hpp, queryStrings, page).then(([hits, totalPages]) => {
       setTotalPages(totalPages)
@@ -38,7 +46,6 @@ function useHits (hpp, queryStrings, initialHits, initialTotalPages) {
     })
   }, [page, isFirstRender.current])
 
-  isFirstRender.current = false
 
   return [hits, page, totalPages, setPage]
 }

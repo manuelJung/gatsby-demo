@@ -1,5 +1,5 @@
 
 export default async function fetchCreateAlgoliaHelper () {
-  const createAlgoliaHelper = await import('./fetchCreateAlgoliaHelper')
+  let createAlgoliaHelper = await import('./createAlgoliaHelper')
   return createAlgoliaHelper
 }
