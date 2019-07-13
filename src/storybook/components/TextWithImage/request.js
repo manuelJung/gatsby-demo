@@ -9,6 +9,6 @@ export const createContext = async ({props, cache}) => {
 export const preprocessProps = ({props}) => Object.assign({},props, {
   textProps: {
     ...props.textProps,
-    children: makeHtml(props.children)
+    children: makeHtml(props.textProps.children)
   }
 })

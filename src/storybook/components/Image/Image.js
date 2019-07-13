@@ -13,7 +13,6 @@ export default function Image ({alt, src, label, context /*, context: {fluid}*/}
       <div className='image-wrapper'>
         <img ref={ref} src={image} alt={alt}/>
       </div>
-      {label && <div className='label'>{label}</div>}
     </Wrapper>
   )
 }

@@ -30,11 +30,20 @@ export default function TextWithImage ({textProps, imageProps, context}:Props) {
 }
 
 const Wrapper = styled.div`
+
   > .image {
     width: 100%;
     > .image-wrapper {
       width: 100%;
       > img { width: 100%; }
+    }
+  }
+
+  @media (min-width: 768px) {
+    > .image {
+      float: left;
+      width: calc(40% - 11px);
+      margin-right: 22px;
     }
   }
 `

@@ -10,7 +10,7 @@ try {
 catch(e){}
 
 export default function useLazyImageSrc (src, base64='') {
-  const [ref, inView] = useInView()
+  const [ref, inView] = useInView({triggerOnce:true})
   const [image, setImage] = React.useState(loaded[src] || base64)
 
   React.useEffect(() => {
