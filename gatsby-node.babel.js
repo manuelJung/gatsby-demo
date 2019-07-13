@@ -34,13 +34,13 @@ export async function createPages ({graphql, actions}) {
     })
   })
 
-  // gq.data.magazineArticles.nodes.forEach(article => {
-  //   actions.createPage({
-  //     path: `magazin/a/${article.urlKey}`,
-  //     component: path.resolve(__dirname, 'src/templates/MagazineArticle.js'),
-  //     context: {urlKey: article.urlKey}
-  //   })
-  // })
+  gq.data.magazineArticles.nodes.forEach(article => {
+    actions.createPage({
+      path: `magazin/a/${article.urlKey}`,
+      component: path.resolve(__dirname, 'src/templates/MagazineArticle.js'),
+      context: {urlKey: article.urlKey}
+    })
+  })
 }
 
 

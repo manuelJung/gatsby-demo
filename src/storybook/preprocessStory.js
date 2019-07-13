@@ -29,6 +29,7 @@ export default async function preprocessStory (rawStory, {cache}) {
   { // create component list by mobile grid order first (to prevent flickering)
     let mobileComponentsDict = {}
     let components = new Set()
+    try {
     rawStory.GRID.MOBILE_M.content
       .replace(/\/.*/, '')
       .match(/".*"/g)
@@ -40,6 +41,11 @@ export default async function preprocessStory (rawStory, {cache}) {
           components.add(id)
         }
       }))
+
+    }
+    catch(e) {
+      console.log('WARNING (preprocessStory) unable to extract mobile compponents')
+    }
 
     Object.keys(story.dict).forEach(id => {
       if(!mobileComponentsDict[id]) components.add(id)

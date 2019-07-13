@@ -30,7 +30,7 @@ export default async function toBase64 (url, size=16) {
   const cache = await new Promise(resolve => {
     fs.readFile(cachePath, (err, data) => {
       if(err) resolve(null) // not found
-      else resolve(data)
+      else resolve(data.toString())
     })
   })
 
