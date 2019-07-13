@@ -25,6 +25,11 @@ export async function createPages ({graphql, actions}) {
     component: path.resolve(__dirname, 'src/templates/Homepage.js')
   })
 
+  actions.createPage({
+    path: `/magazin`,
+    component: path.resolve(__dirname, 'src/templates/Magazine.js')
+  })
+
 
   gq.data.pages.nodes.forEach(page => {
     actions.createPage({
