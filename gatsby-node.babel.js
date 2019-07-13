@@ -49,6 +49,11 @@ export async function createPages ({graphql, actions}) {
     component: path.resolve(__dirname, 'src/templates/Homepage.js')
   })
 
+  actions.createPage({
+    path: `/sale`,
+    component: path.resolve(__dirname, 'src/templates/Sale.js')
+  })
+
   gq.data.magazineArticlesByCategory.group.forEach(group => {
     const numPages = Math.ceil(group.nodes.length/20)
     const category = group.category.toLowerCase()
