@@ -5,6 +5,15 @@ import preprocessStory from 'storybook/preprocessStory'
 import crypto from 'crypto'
 import path from 'path'
 
+const createMagazineListContext = (page, max) => ({
+  page: page,
+  noStory: page !== 0,
+  hpp: 20,
+  skip: 20 * page,
+  prevUrl: page !== 0 && page === 1 ? '/magazin' : `/magazin/page/${page}`,
+  nextUrl: page !== 22 && `/magazin/page/${page+2}`,
+})
+
 export async function createPages ({graphql, actions}) {
   
   const gq = await graphql(`{
@@ -27,9 +36,17 @@ export async function createPages ({graphql, actions}) {
 
   actions.createPage({
     path: `/magazin`,
-    component: path.resolve(__dirname, 'src/templates/Magazine.js')
+    component: path.resolve(__dirname, 'src/templates/Magazine.js'),
+    context: createMagazineListContext(0)
   })
 
+  
+  const magazineLists = Math.ceil(gq.data.magazineArticles.nodes.length / 20)
+  Array(magazineLists).fill().forEach((_,i) => i !== 0 && actions.createPage({
+    path: `/magazin/page/${i+1}`,
+    component: path.resolve(__dirname, 'src/templates/Magazine.js'),
+    context: createMagazineListContext(i, magazineLists)
+  }))
 
   gq.data.pages.nodes.forEach(page => {
     actions.createPage({
