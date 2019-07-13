@@ -17,7 +17,7 @@ export default ({data, pageContext}) => {
 
       <div>
         {data.allMagazineArticle.nodes.map(node => (
-          <div key={node.urlKey}>{node.urlKey}</div>
+          <div key={node.urlKey}>{node.categoryName} - {node.urlKey}</div>
         ))}
       </div>
     </Layout>
@@ -25,16 +25,17 @@ export default ({data, pageContext}) => {
 }
 
 export const query = graphql`
-  query($noStory: Boolean! $hpp: Int! $skip: Int!) {
+  query($noStory: Boolean! $hpp: Int! $skip: Int!, $categoryRegex: String!) {
     staticBlock (id: {eq: "1s8k04g0360kAAGWCUGQ8w"}) {
       story @skip(if: $noStory)
     }
-    allMagazineArticle(limit:$hpp skip:$skip) {
+    allMagazineArticle(limit:$hpp skip:$skip filter: {categoryName: {regex: $categoryRegex}}) {
       pageInfo {
         pageCount
       }
       nodes {
         urlKey
+        categoryName
       }
     }
   }

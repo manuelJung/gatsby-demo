@@ -5,13 +5,14 @@ import preprocessStory from 'storybook/preprocessStory'
 import crypto from 'crypto'
 import path from 'path'
 
-const createMagazineListContext = (page, max) => ({
+const createMagazineListContext = (page, max, category) => ({
   page: page,
-  noStory: page !== 0,
+  noStory: Boolean(category) || page !== 0,
   hpp: 20,
   skip: 20 * page,
   prevUrl: page !== 0 && page === 1 ? '/magazin' : `/magazin/page/${page}`,
   nextUrl: page !== 22 && `/magazin/page/${page+2}`,
+  categoryRegex: category ? `/${category}/` : "/.*/"
 })
 
 export async function createPages ({graphql, actions}) {
@@ -33,6 +34,14 @@ export async function createPages ({graphql, actions}) {
         link
       }
     }
+    magazineArticlesByCategory:allMagazineArticle {
+      group(field: categoryName) {
+        category:fieldValue
+        nodes {
+          urlKey
+        }
+      }
+    }
   }`)
 
   actions.createPage({
@@ -40,19 +49,34 @@ export async function createPages ({graphql, actions}) {
     component: path.resolve(__dirname, 'src/templates/Homepage.js')
   })
 
-  actions.createPage({
-    path: `/magazin`,
-    component: path.resolve(__dirname, 'src/templates/Magazine.js'),
-    context: createMagazineListContext(0)
+  gq.data.magazineArticlesByCategory.group.forEach(group => {
+    const numPages = Math.ceil(group.nodes.length/20)
+    const category = group.category.toLowerCase()
+    actions.createPage({
+      path: `/magazin/${category}`,
+      component: path.resolve(__dirname, 'src/templates/Magazine.js'),
+      context: createMagazineListContext(0, numPages, group.category)
+    })
+    Array(numPages).fill().forEach((_,i) => i !== 0 && actions.createPage({
+      path: `/magazin/${category}/page/${i+1}`,
+      component: path.resolve(__dirname, 'src/templates/Magazine.js'),
+      context: createMagazineListContext(i, numPages, group.category)
+    }))
   })
 
-  
-  const magazineLists = Math.ceil(gq.data.magazineArticles.nodes.length / 20)
-  Array(magazineLists).fill().forEach((_,i) => i !== 0 && actions.createPage({
-    path: `/magazin/page/${i+1}`,
-    component: path.resolve(__dirname, 'src/templates/Magazine.js'),
-    context: createMagazineListContext(i, magazineLists)
-  }))
+  { // magazine article lists
+    const numPages = Math.ceil(gq.data.magazineArticles.nodes.length / 20)
+    actions.createPage({
+      path: `/magazin`,
+      component: path.resolve(__dirname, 'src/templates/Magazine.js'),
+      context: createMagazineListContext(0, numPages)
+    })
+    Array(numPages).fill().forEach((_,i) => i !== 0 && actions.createPage({
+      path: `/magazin/page/${i+1}`,
+      component: path.resolve(__dirname, 'src/templates/Magazine.js'),
+      context: createMagazineListContext(i, numPages)
+    }))
+  }
 
   gq.data.pages.nodes.forEach(page => {
     actions.createPage({
