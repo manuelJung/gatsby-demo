@@ -37,6 +37,7 @@ function Image (props:*) {
 }
 
 const Wrapper = styled.div`
+  line-height: 1;
   > h3 {
     margin-top: 3px;
     margin-bottom: 23px;
