@@ -1,20 +1,21 @@
 import React from 'react'
+import Layout from 'containers/Layout'
 import Story from 'storybook/Story'
 import { graphql } from "gatsby"
-import Layout from 'containers/Layout'
 
 export default (props) => {
 
   return (
     <Layout>
-      <Story story={props.data.page.story}/>
+      <p/>
+      <Story story={props.data.category.story}/>
     </Layout>
   )
 }
 
 export const query = graphql`
-  query($urlKey: String!) {
-    page (urlKey: {eq: $urlKey}){
+  query($id:String!) {
+    category (id: {eq: $id}) {
       story
     }
   }

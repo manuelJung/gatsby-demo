@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import useLazyImageSrc from 'hooks/useLazyImageSrc'
 import {colors, positions} from './const'
 import useWidth from './useWidth'
+import {Link} from 'gatsby'
 
 
 type Props = {
@@ -36,7 +37,7 @@ export default function Banner (props:Props) {
   }
 
   return (
-    <Wrapper ref={widthRef} className='Banner' {...wrapperProps}>
+    <Wrapper ref={widthRef} className='Banner' {...wrapperProps} to={props.link}>
       <img ref={ref} src={image} alt={props.alt} />
 
       <div className='label'>
@@ -47,9 +48,11 @@ export default function Banner (props:Props) {
   )
 }
 
-const Wrapper = styled.div`
-  > img {width:100%;}
+const Wrapper = styled(Link)`
+  display: block;
   position: relative;
+  cursor: pointer;
+  > img {width:100%;}
 
   p {
     margin: 1em 0px;
@@ -61,7 +64,6 @@ const Wrapper = styled.div`
     position: absolute;
     background: ${props => props.background};
     bottom: 0;
-    cursor: pointer;
 
     text-align: center;
     color: white;

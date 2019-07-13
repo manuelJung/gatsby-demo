@@ -2,6 +2,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import useLazyImageSrc from 'hooks/useLazyImageSrc'
+import {Link} from 'gatsby'
 
 
 
@@ -10,15 +11,17 @@ export default function Image ({alt, src, label, context /*, context: {fluid}*/}
 
   return (
     <Wrapper className='Image'>
-      <div className='image-wrapper'>
+      <Link className='image-wrapper'>
         <img ref={ref} src={image} alt={alt}/>
-      </div>
+      </Link>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
   > .image-wrapper {
+    cursor: pointer;
+    display: block;
     width: 100%;
     > img { width: 100%; }
   }

@@ -27,6 +27,12 @@ export async function createPages ({graphql, actions}) {
         urlKey
       }
     }
+    categories:allCategory {
+      nodes {
+        objectID
+        link
+      }
+    }
   }`)
 
   actions.createPage({
@@ -63,6 +69,12 @@ export async function createPages ({graphql, actions}) {
       context: {urlKey: article.urlKey}
     })
   })
+
+  gq.data.categories.nodes.forEach(node => actions.createPage({
+    path: node.link,
+    component: path.resolve(__dirname, 'src/templates/Category.js'),
+    context: {id: node.objectID}
+  }))
 }
 
 
