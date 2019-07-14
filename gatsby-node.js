@@ -8,6 +8,7 @@ const node = require('./gatsby-node.babel')
 exports.createPages = node.createPages
 exports.createSchemaCustomization = node.createSchemaCustomization
 exports.sourceNodes = node.sourceNodes
+exports.onCreatePage = node.onCreatePage
 
 
 
