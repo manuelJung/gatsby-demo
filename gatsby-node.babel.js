@@ -10,8 +10,7 @@ const createMagazineListContext = (page, max, category) => ({
   noStory: Boolean(category) || page !== 0,
   hpp: 20,
   skip: 20 * page,
-  prevUrl: page !== 0 && page === 1 ? '/magazin' : `/magazin/page/${page}`,
-  nextUrl: page !== 22 && `/magazin/page/${page+2}`,
+  category: category,
   categoryRegex: category ? `/${category}/` : "/.*/"
 })
 
@@ -248,6 +247,7 @@ export const sourceNodes = async ({ actions }) => {
     cat.hideProducts = Boolean(cat.hideProducts)
     cat.categoryLevel = cat.categoryLevel || null
     cat.story = cat.story || null
+    cat.productTags = cat.productTags || []
 
     // relations
     cat.parentCategory___NODE = cat.parentId

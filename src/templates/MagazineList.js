@@ -2,21 +2,24 @@ import React from 'react'
 import Layout from 'containers/Layout'
 import Story from 'storybook/Story'
 import { graphql, Link } from "gatsby"
+import {getMagazineListPath} from 'routes'
 
 export default ({data, pageContext}) => {
   const {story} = data.staticBlock
+  const {pageInfo, nodes} = data.allMagazineArticle
+  const {page, category} = pageContext
   return (
     <Layout>
       {story && <Story story={story}/>}
 
       <div>
-        {pageContext.prevUrl && <Link to={pageContext.prevUrl}>prev</Link>}
+        {pageInfo.hasPreviousPage && <Link to={getMagazineListPath(page-1, category)}>prev</Link>}
         --
-        {pageContext.nextUrl && <Link to={pageContext.nextUrl}>next</Link>}
+        {pageInfo.hasNextPage && <Link to={getMagazineListPath(page+1, category)}>next</Link>}
       </div>
 
       <div>
-        {data.allMagazineArticle.nodes.map(node => (
+        {nodes.map(node => (
           <div key={node.urlKey}>{node.categoryName} - {node.urlKey}</div>
         ))}
       </div>
@@ -31,7 +34,8 @@ export const query = graphql`
     }
     allMagazineArticle(limit:$hpp skip:$skip filter: {categoryName: {regex: $categoryRegex}}) {
       pageInfo {
-        pageCount
+        hasNextPage
+        hasPreviousPage
       }
       nodes {
         urlKey
