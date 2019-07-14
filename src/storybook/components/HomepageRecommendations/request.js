@@ -1,6 +1,6 @@
 import createAlgoliaHelper from 'utils/createAlgoliaHelper'
 
-export const createContext = async ({props}) => {
+export const createContext = async props => {
   const helper = createAlgoliaHelper('products', {
     disjunctiveFacets: ['objectID'],
     attributesToHighlight: []

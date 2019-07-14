@@ -1,6 +1,6 @@
 const store = {}
 
-export default async function preprocessStory (rawStory, {cache}) {
+export default async function preprocessStory (rawStory) {
   let story = {dict:{},grids:{},partialStateUpdates:[], components: []}
   if(!rawStory) return story
 
@@ -10,7 +10,7 @@ export default async function preprocessStory (rawStory, {cache}) {
     const request = getRequest(component.name)
     if(request){
       if(request.preprocessProps){
-        const newProps = await request.preprocessProps({props: component.props, cache})
+        const newProps = await request.preprocessProps(component.props)
         component.props = newProps
       }
       if(request.createPartialStateUpdates){
@@ -18,7 +18,7 @@ export default async function preprocessStory (rawStory, {cache}) {
         story.partialStateUpdates.push(...partialStateUpdates)
       }
       if(request.createContext){
-        const context = await request.createContext({props: component.props, cache})
+        const context = await request.createContext(component.props)
         component.props.context = context
       }
     }

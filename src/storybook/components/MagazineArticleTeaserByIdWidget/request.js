@@ -1,7 +1,7 @@
 import createAlgoliaHelper from 'utils/createAlgoliaHelper'
 import toBase64 from 'utils/toBase64'
 
-export const createContext = async ({props}) => {
+export const createContext = async props => {
   const helper = createAlgoliaHelper('magazine', {
     disjunctiveFacets: ['objectID'],
     attributesToHighlight: [],
