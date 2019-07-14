@@ -6,12 +6,12 @@ import {Link} from 'gatsby'
 
 
 
-export default function Image ({alt, src, label, context /*, context: {fluid}*/}) {
+export default function Image ({alt, src, label, link, context /*, context: {fluid}*/}) {
   const [ref, image] = useLazyImageSrc(src, context.base64)
 
   return (
     <Wrapper className='Image'>
-      <Link className='image-wrapper'>
+      <Link className='image-wrapper' to={link}>
         <img ref={ref} src={image} alt={alt}/>
       </Link>
     </Wrapper>
