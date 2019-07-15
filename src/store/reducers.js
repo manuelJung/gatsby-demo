@@ -2,9 +2,12 @@
 import { combineReducers } from 'redux'
 import storefinderReducer from 'modules/storefinder/reducer'
 
+import userModule from 'modules/user/reducer'
+
 
 const reducers = {
-  storefinder: storefinderReducer
+  storefinder: storefinderReducer,
+  user: userModule
 }
 
 
