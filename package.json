@@ -68,7 +68,7 @@
     "start": "npm run develop",
     "serve": "gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
-    "storybook": "NODE_PATH=src start-storybook -p 6006 -c src/storybook",
+    "storybook": "STORYBOOK_APP_MODE=wucu_de NODE_PATH=src start-storybook -p 6006 -c src/storybook",
     "build-storybook": "NODE_PATH=src build-storybook -c src/storybook"
   },
   "repository": {
