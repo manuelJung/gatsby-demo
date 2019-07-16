@@ -21,7 +21,7 @@ async function fetchHits(hpp, queryStrings, page) {
   return [hits, totalPages]
 }
 
-export async function createContext ({props}) {
+export async function createContext (props) {
   const [hits, totalPages] = await fetchHits(props.hitsPerPage, props.queryStrings, 0)
 
   return {initialHits: hits, totalPages}
