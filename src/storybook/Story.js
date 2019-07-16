@@ -24,8 +24,8 @@ export default function Story ({story}:Props) {
         )
 
         return (
-          <ComponentWrapper className={props.gridArea + ' CmsWrapper'} gridArea={props.gridArea}>
-            <Component key={id} {...props}/>
+          <ComponentWrapper key={id} className={props.gridArea + ' CmsWrapper'} gridArea={props.gridArea}>
+            <Component {...props}/>
           </ComponentWrapper>
         )
       })}
