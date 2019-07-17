@@ -15,8 +15,6 @@ type Props = {
 export default function CurratedSearchWidget ({hitsPerPage, queryStrings, context}:Props) {
   const [hits, page, totalPages, setPage] = useHits(hitsPerPage, queryStrings, context.initialHits, context.totalPages)
 
-  console.log(context)
-
   return (
     <div>
       {hits.map(hit => <div key={hit.objectID}>- {hit.objectID}</div>)}

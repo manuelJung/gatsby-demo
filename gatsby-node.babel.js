@@ -81,6 +81,7 @@ export async function createPages ({graphql, actions}) {
   })
 
   gq.data.magazineArticles.nodes.forEach(article => {
+    if(article.urlKey === 'kolumne-dunja-wermter-2') return
     actions.createPage({
       path: `magazin/a/${article.urlKey}`,
       component: path.resolve(__dirname, 'src/templates/MagazineArticle.js'),
