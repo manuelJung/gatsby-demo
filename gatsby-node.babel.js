@@ -25,6 +25,7 @@ export async function createPages ({graphql, actions}) {
     magazineArticles:allMagazineArticle {
       nodes {
         urlKey
+        storyComponentPaths
       }
     }
     categories:allCategory {
@@ -85,7 +86,8 @@ export async function createPages ({graphql, actions}) {
     actions.createPage({
       path: `magazin/a/${article.urlKey}`,
       component: path.resolve(__dirname, 'src/templates/MagazineArticle.js'),
-      context: {urlKey: article.urlKey}
+      context: {urlKey: article.urlKey},
+      modules: article.storyComponentPaths
     })
   })
 
@@ -103,8 +105,6 @@ export const onCreatePage = async ({ page, actions }) => {
   // only on the client.
   if (page.path.match(/^\/product/)) {
     page.matchPath = "/product/*"
-
-    // Update the page.
     createPage(page)
   }
 }
@@ -119,12 +119,23 @@ export const createSchemaCustomization = ({ actions, cache }) => {
     name: 'Story',
     extend: () => ({
       resolve: async (source, args, context, info) => {
-        // const cached = await cache.get(source.objectID)
-        // if(cached) return cached
         if(!source.story) return null
-        const story = preprocessStory(source.story, {cache})
-        // await cache.set(source.objectID, story)
+        const story = preprocessStory(source.story)
         return story
+      }
+    })
+  })
+
+  createFieldExtension({
+    name: 'StoryComponentPaths',
+    extend: () => ({
+      resolve: async (source, args, context, info) => {
+        if(!source.story) return null
+        return source.story.COMPONENTS
+          .reduce((p,{name}) => {
+            p[name] = path.resolve(__dirname, `src/storybook/components/${name}.js`)
+            return p
+          }, {})
       }
     })
   })
@@ -132,15 +143,19 @@ export const createSchemaCustomization = ({ actions, cache }) => {
   const typeDefs = `
     type Page implements Node {
       story: JSON @Story
+      storyComponentPaths: JSON @StoryComponentPaths
     }
     type MagazineArticle implements Node {
       story: JSON @Story
+      storyComponentPaths: JSON @StoryComponentPaths
     }
     type StaticBlock implements Node {
       story: JSON @Story
+      storyComponentPaths: JSON @StoryComponentPaths
     }
     type Category implements Node {
       story: JSON @Story
+      storyComponentPaths: JSON @StoryComponentPaths
     }
   `
   createTypes(typeDefs)
