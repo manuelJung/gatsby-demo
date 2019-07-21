@@ -1,5 +1,5 @@
 import React from 'react'
-import manager from './KnobManager'
+import * as manager from './KnobManager'
 import {types} from './components'
 import objPath from 'object-path'
 
@@ -15,6 +15,7 @@ export const imagesrc = (prop, label, value, options={}) => ({prop, label, value
 
 export const create = (Component, knobs) => context => (
   <Component {...knobs.reduce((p,n) => {
+    // TODO: error when reserved key is used as prop
     const knob = {
       ...n, 
       kind: context.kind, 

@@ -1,5 +1,6 @@
 // @flow
 import addons from '@storybook/addons'
+import { forceReRender } from '@storybook/react'
 
 type Knob = {
   value: mixed,
@@ -8,9 +9,9 @@ type Knob = {
   label: string,
   type: string,
   kind: string,
-  story: string
+  story: string,
   options: {
-    globalId?: string
+    globalId?: string,
     group?: string
   }
 }
@@ -28,18 +29,21 @@ type Context = {
 let knobs:{[id:string]:Knob} = {}
 let globalValues:{[gobalId:string]:mixed} = {}
 let wasHydrated = false
+let wasUpdated = false
 
 const channel:Channel = addons.getChannel()
 
-const getCurrentKnobs = (context:Context) => Object.values(knobs).filter(knob => {
+const getCurrentKnobs = (context?:Context) => Object.values(knobs).filter(knob => {
+  if(!context) return true
   if(context.kind !== knob.kind) return false
   if(context.story !== knob.story) return false
   else return true
 })
 
-const updatePanel = (context:Context) => {
+const updatePanel = (context?:Context) => {
   const knobs = getCurrentKnobs(context)
   channel.emit('addon:rlx-knobs:setKnobs', knobs)
+  forceReRender()
   if(!wasHydrated){
     wasHydrated = true
     hydrate(context)
@@ -58,12 +62,16 @@ export const getKnobValue = (knob:Knob) => {
 
 const setKnob = (knob:Knob) => {
   knobs[knob.knobId] = knob
-  if(knobs.options.global){
+  if(knob.options.global){
     globalValues[knob.options.global] = knob.value
+  }
+  if(!wasUpdated){
+    wasUpdated = true
+    updatePanel()
   }
 }
 
-const hydrate = (context:Context) => {
+const hydrate = (context?:Context) => {
   const knobs = getCurrentKnobs(context)
   // let listener = window.addEventListener('message', e => {
   //   window.removeEventListener('message', listener)
@@ -80,7 +88,7 @@ const hydrate = (context:Context) => {
   // window.postMessage('knob-manager:ready')
 
   setTimeout(() => {
-    const component = {id:'',name:'',props:{}}
+    const component = {id:'',name:'',props:{gridArea:'NewButton'}}
     knobs.forEach(knob => {
       let newKnob = {...knob}
       if(component.props[newKnob.prop] !== undefined){
@@ -98,6 +106,4 @@ const hydrate = (context:Context) => {
 // updaters
 
 channel.on('addon:rlx-knobs:setKnobValue', setKnob)
-hannel.on('setCurrentStory', updatePanel)
-
-
+channel.on('setCurrentStory', updatePanel)
