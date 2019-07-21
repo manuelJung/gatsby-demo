@@ -22,7 +22,7 @@ const Wrapper = styled.div`
     border: 2px solid grey;
     border-radius: 5px;
     &:focus {
-      border: 2px solid green;
+      border: 2px solid #1EA7FD;
     }
   }
 `
