@@ -54,11 +54,15 @@ function usePreprocession (userConfig, request={}) {
     const {createContext, preprocessProps} = request
     Promise.resolve(userConfig)
     .then(props => preprocessProps ? preprocessProps(props) : props)
-    .then(props => createContext ? createContext(props) : props)
+    .then(async props => {
+      if(!createContext) return props
+      const context = await createContext(props)
+      return {...props, context}
+    })
     .then(props => {
       if(userConfig !== currentUserConfig.current) return
-      setShouldDisplay(true)
       setProps(props)
+      setShouldDisplay(true)
     })
   }, [request.preprocessProps, request.createContext, userConfig])
   
