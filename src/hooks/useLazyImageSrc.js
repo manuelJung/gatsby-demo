@@ -15,7 +15,10 @@ export default function useLazyImageSrc (src, base64='') {
 
   React.useEffect(() => {
     if(!inView) return
-    if(loaded[src]) return
+    if(loaded[src]) {
+      if(src !== image) setImage(src)
+      else return
+    }
 
     run(() => {
       var img = new Image()
