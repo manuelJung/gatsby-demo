@@ -1,11 +1,18 @@
-import crypto from 'crypto'
-import fs from 'fs'
-import path from 'path'
+var tryRequire = require('try-require')
 
 let dirCheck = false
 
 
 export default async function toBase64 (url, size=16) {
+  const fs = tryRequire('fs')
+  const crypto = tryRequire('crypto')
+  const path = tryRequire('path')
+  const fetch = tryRequire('node-fetch')
+  const sharp = tryRequire('sharp')
+
+  // called from storybook
+  if(!fs) return ''
+
   if(!url) {
     console.log('(toBase64) src is undefined')
     return
@@ -38,8 +45,8 @@ export default async function toBase64 (url, size=16) {
 
 
   try {
-    const img = await require('node-fetch')(url).then(res => res.buffer())
-    const resizedImageBuf = await require('sharp')(img)
+    const img = await fetch(url).then(res => res.buffer())
+    const resizedImageBuf = await sharp(img)
       .resize(undefined, size)
       .toBuffer()
 
