@@ -6,8 +6,11 @@ import {create, text} from 'storybook/customAddons/knobs'
 
 const Button = ({gridArea}) => <button>hello {gridArea}</button>
 
-storiesOf('Button', module)
-  .add('with text', () => <button onClick={action('clicked')}>Hello Button {config.app_name}</button>)
+
+storiesOf('cms/base/Button', module)
+  .add('with text', create(Button, [
+    text('gridArea', 'Grid-Area', 'Button')
+  ]))
   .add('with some emoji', create(Button, [
     text('gridArea', 'Grid-Area', 'Button')
   ]));

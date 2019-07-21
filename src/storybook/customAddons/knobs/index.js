@@ -21,7 +21,9 @@ export const create = (Component, knobs, request) => context => {
       ...n, 
       kind: context.kind, 
       story: context.story,
-      knobId: `${context.story}-${context.kind}-${n.prop}`
+      storyId: context.id,
+      componentName: Component.name,
+      knobId: `${context.id}--${n.prop}`
     }
     objPath.set(p, n.prop, manager.getKnobValue(knob))
     return p
