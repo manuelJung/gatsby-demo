@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react'
 import styled from 'styled-components'
+import {getComponent} from './components'
 
 type Props = {
   channel: mixed,
@@ -17,14 +18,20 @@ export default function Panel ({channel, api}) {
   return (
     <Wrapper>
       <div className='knob-list'>
-        {knobs.map(knob => (
-          <span onClick={() => updateKnob(knob, 'Hello World')}>
-            {knob.type} - {knob.label} - {knob.value}
-          </span>
-        ))}
+        {knobs.map(knob => <ComponentFactory key={knob.storyId} knob={knob} onChange={val => updateKnob(knob, val)}/>)}
       </div>
     </Wrapper>
   )
+}
+
+function ComponentFactory ({knob, onChange}) {
+  const [value, setValue] = React.useState(knob.value)
+  const handleChange = value => {
+    setValue(value)
+    onChange(value)
+  }
+  const Component = getComponent(knob.type)
+  return <Component value={value} onChange={handleChange} {...knob.options} />
 }
 
 function useKnobs (channel, api) {

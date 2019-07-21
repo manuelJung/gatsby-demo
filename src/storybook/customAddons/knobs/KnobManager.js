@@ -103,7 +103,6 @@ const hydrate = (context?:Context) => {
 
 
 // updaters
-console.log(addons)
 
 channel.on('addon:rlx-knobs:updateKnob', setKnob)
 channel.on('setCurrentStory', _context => {
