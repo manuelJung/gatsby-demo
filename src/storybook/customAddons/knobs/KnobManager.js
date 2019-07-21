@@ -24,25 +24,26 @@ type Channel = {
 
 type Context = {
   kind: string,
-  story: string
+  story: string,
+  storyId: string
 }
 
 let knobs:{[id:string]:Knob} = {}
 let globalValues:{[gobalId:string]:mixed} = {}
+let context = null
 let wasHydrated = false
 let wasUpdated = false
 
 const channel:Channel = addons.getChannel()
 
-const getCurrentKnobs = (context?:Context) => Object.values(knobs).filter(knob => {
+const getCurrentKnobs = () => Object.values(knobs).filter(knob => {
   if(!context) return true
   if(context.storyId !== knob.storyId) return false
   else return true
 })
 
-const updatePanel = (context?:Context) => {
+const updatePanel = () => {
   const knobs = getCurrentKnobs(context)
-  console.log(knobs)
   channel.emit('addon:rlx-knobs:setKnobs', knobs)
   forceReRender()
   if(!wasHydrated){
@@ -105,4 +106,7 @@ const hydrate = (context?:Context) => {
 console.log(addons)
 
 channel.on('addon:rlx-knobs:updateKnob', setKnob)
-channel.on('setCurrentStory', updatePanel)
+channel.on('setCurrentStory', _context => {
+  context = _context
+  updatePanel(context)
+})
