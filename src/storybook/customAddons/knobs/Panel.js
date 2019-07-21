@@ -31,7 +31,14 @@ function ComponentFactory ({knob, onChange}) {
     onChange(value)
   }
   const Component = getComponent(knob.type)
-  return <Component value={value} onChange={handleChange} {...knob.options} />
+  return (
+    <div className='knob-row'>
+      <div className='label'>{knob.label}</div>
+      <div className='value'>
+        <Component value={value} onChange={handleChange} {...knob.options} />
+      </div>
+    </div>
+  )
 }
 
 function useKnobs (channel, api) {
@@ -54,4 +61,16 @@ function useKnobs (channel, api) {
   return [knobs, tabs, activeTab, setActiveTab]
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  .knob-row {
+    padding: 5px;
+    > .label {
+      width: 130px;
+      padding: 3px;
+      font-weight: bold;
+    }
+    > .value {
+      width: 100%;
+    }
+  }
+`

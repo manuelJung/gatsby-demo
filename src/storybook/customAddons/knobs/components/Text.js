@@ -1,31 +1,28 @@
 import React from 'react'
-import pt from 'prop-types'
+import styled from 'styled-components'
 
-export default class Text extends React.Component {
- static propTypes = {
-   value: pt.string.isRequired,
-   onChange: pt.func.isRequired
- }
-
- state = {
-   value: this.props.value,
- }
-
- changeHeight = e => {
-   e.target.style.height = "";
-   e.target.style.height = `${e.target.scrollHeight+20}px`
- }
-
- handleChange = e => {
-   const value = e.target.value
-   this.setState({value}, () => this.props.onChange(value))
- }
-
- render(){
-   return (
-     <textarea id='myInput' className='text-field' value={this.state.value}
-     onChange={this.handleChange} onFocus={this.changeHeight}
-     />
-   )
- }
+type Props = {
+  value: string,
+  onChange: (val:string) => mixed
 }
+
+export default function Text ({value, onChange}) {
+  return (
+    <Wrapper>
+      <input type="text" value={value} onChange={e => onChange(e.target.value)}/>
+    </Wrapper>
+  )
+}
+
+const Wrapper = styled.div`
+  width: 100%;
+  > input {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid grey;
+    border-radius: 5px;
+    &:focus {
+      border: 2px solid green;
+    }
+  }
+`
