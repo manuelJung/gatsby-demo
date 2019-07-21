@@ -28,7 +28,10 @@ export const create = (Component, knobs, request) => context => {
     objPath.set(p, n.prop, manager.getKnobValue(knob))
     return p
   }, {})
+  return <Wrapper {...{userConfig, request, Component}}/>
+}
 
+function Wrapper ({userConfig, Component, request}) {
   const [shouldDisplay, props] = usePreprocession(userConfig, request)
 
   if(!shouldDisplay) return null
@@ -38,7 +41,7 @@ export const create = (Component, knobs, request) => context => {
 
 
 
-function usePreprocession (userConfig, request) {
+function usePreprocession (userConfig, request={}) {
   if(!request) return [true, userConfig]
 
   const [shouldDisplay, setShouldDisplay] = React.useState(false)

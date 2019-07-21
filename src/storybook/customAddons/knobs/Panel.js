@@ -18,7 +18,7 @@ export default function Panel ({channel, api}) {
   return (
     <Wrapper>
       <div className='knob-list'>
-        {knobs.map(knob => <ComponentFactory key={knob.storyId} knob={knob} onChange={val => updateKnob(knob, val)}/>)}
+        {knobs.map(knob => <ComponentFactory key={knob.prop} knob={knob} onChange={val => updateKnob(knob, val)}/>)}
       </div>
     </Wrapper>
   )
