@@ -13,8 +13,9 @@ export const constant = (prop, label, value, options={}) => ({prop, label, value
 export const drafttext = (prop, label, value, options={}) => ({prop, label, value, options, type: types.DRAFTTEXT})
 export const imagesrc = (prop, label, value, options={}) => ({prop, label, value, options, type: types.IMAGE_SRC})
 
-export const create = (Component, knobs) => context => (
-  <Component {...knobs.reduce((p,n) => {
+
+export const create = (Component, knobs, request) => context => {
+  const userConfig = knobs.reduce((p,n) => {
     // TODO: error when reserved key is used as prop
     const knob = {
       ...n, 
@@ -24,5 +25,38 @@ export const create = (Component, knobs) => context => (
     }
     objPath.set(p, n.prop, manager.getKnobValue(knob))
     return p
-  }, {})} />
-)
+  }, {})
+
+  const [shouldDisplay, props] = usePreprocession(userConfig, request)
+
+  if(!shouldDisplay) return null
+
+  return <Component {...props}/>
+}
+
+
+
+function usePreprocession (userConfig, request) {
+  if(!request) return [true, userConfig]
+
+  const [shouldDisplay, setShouldDisplay] = React.useState(false)
+  const [props, setProps] = React.useState(userConfig)
+  const currentUserConfig = React.useRef(userConfig)
+  currentUserConfig.current = userConfig
+
+  React.useEffect(() => {
+    // TODO: maybe add throttling
+    const {createContext, preprocessProps} = request
+    Promise.resolve(userConfig)
+    .then(props => preprocessProps ? preprocessProps(props) : props)
+    .then(props => createContext ? createContext(props) : props)
+    .then(props => {
+      if(userConfig !== currentUserConfig.current) return
+      setShouldDisplay(true)
+      setProps(props)
+    })
+  }, [request.preprocessProps, request.createContext, userConfig])
+  
+
+  return [shouldDisplay, props]
+}
