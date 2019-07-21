@@ -4,7 +4,7 @@ import Text from './Text'
 // import Number from './Number'
 // import Array from './Array'
 // import Constant from './Constant'
-// import DraftText from './DraftText'
+import DraftText from './DraftText'
 // import ImageSrc from './ImageSrc'
 
 export const types = {
@@ -25,7 +25,7 @@ const dict = {
   // [types.NUMBER]: Number,
   // [types.ARRAY]: Array,
   // [types.CONSTANT]: Constant,
-  // [types.DRAFTTEXT]: DraftText,
+  [types.DRAFTTEXT]: DraftText,
   // [types.IMAGE_SRC]: ImageSrc
 }
 

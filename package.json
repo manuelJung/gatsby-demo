@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
+    "@opuscapita/react-markdown": "^2.3.9",
     "algolia": "0.0.0",
     "algoliasearch": "^3.33.0",
     "algoliasearch-helper": "^2.28.0",
@@ -35,7 +36,7 @@
     "react-helmet": "^5.2.0",
     "react-icons": "^3.7.0",
     "react-intersection-observer": "^8.23.0",
-    "react-simplemde-editor": "^4.0.0",
+    "react-simplemde-editor": "3.6.21",
     "sharp": "^0.22.1",
     "showdown": "^1.9.0",
     "storybook": "^1.0.0",
