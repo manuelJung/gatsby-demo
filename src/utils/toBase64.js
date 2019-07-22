@@ -1,14 +1,14 @@
 var tryRequire = require('try-require')
+const fs = tryRequire('fs')
+const crypto = tryRequire('crypto')
+const path = tryRequire('path')
+const fetch = tryRequire('node-fetch')
+const sharp = tryRequire('sharp')
 
 let dirCheck = false
 
 
 export default async function toBase64 (url, size=16) {
-  const fs = tryRequire('fs')
-  const crypto = tryRequire('crypto')
-  const path = tryRequire('path')
-  const fetch = tryRequire('node-fetch')
-  const sharp = tryRequire('sharp')
 
   // called from storybook
   if(!fs) return ''
