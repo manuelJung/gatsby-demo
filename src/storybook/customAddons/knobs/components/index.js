@@ -1,31 +1,31 @@
 // @flow
-import Text from './Text'
+import String from './String'
 // import Select from './Select'
 import Boolean from './Boolean'
 import Number from './Number'
 // import Array from './Array'
 import Constant from './Constant'
-import DraftText from './DraftText'
+import Markdown from './Markdown'
 
 export const types = {
-  TEXT: 'TEXT',
+  STRING: 'STRING',
   SELECT: 'SELECT',
   BOOLEAN: 'BOOLEAN',
   NUMBER: 'NUMBER',
   ARRAY: 'ARRAY',
   CONSTANT: 'CONSTANT',
-  DRAFTTEXT: 'DRAFTTEXT',
+  MARKDOWN: 'MARKDOWN',
   IMAGE_SRC: 'IMAGE_SRC'
 }
 
 const dict = {
-  [types.TEXT]: Text,
+  [types.STRING]: String,
   // [types.SELECT]: Select,
   [types.BOOLEAN]: Boolean,
   [types.NUMBER]: Number,
   // [types.ARRAY]: Array,
   [types.CONSTANT]: Constant,
-  [types.DRAFTTEXT]: DraftText
+  [types.MARKDOWN]: Markdown
 }
 
 export const getComponent = (type:string) => dict[type]

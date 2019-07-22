@@ -7,7 +7,7 @@ type Props = {
   onChange: (val:string) => mixed
 }
 
-export default function Text ({value, onChange}) {
+export default function String ({value, onChange}) {
   return (
     <Wrapper>
       <input type="text" value={value} onChange={e => onChange(e.target.value)}/>

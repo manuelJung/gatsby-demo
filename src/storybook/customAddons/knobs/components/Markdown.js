@@ -8,7 +8,7 @@ type Props = {
   onChange: (val:string) => mixed
 }
 
-export default function DraftText ({value, onChange}) {
+export default function Markdown ({value, onChange}) {
   const [focused, setFocused] = React.useState(false)
   return (
     <Wrapper focused={focused}>
