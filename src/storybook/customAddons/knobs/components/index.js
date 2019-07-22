@@ -6,7 +6,6 @@ import Number from './Number'
 // import Array from './Array'
 import Constant from './Constant'
 import DraftText from './DraftText'
-// import ImageSrc from './ImageSrc'
 
 export const types = {
   TEXT: 'TEXT',
@@ -26,8 +25,7 @@ const dict = {
   [types.NUMBER]: Number,
   // [types.ARRAY]: Array,
   [types.CONSTANT]: Constant,
-  [types.DRAFTTEXT]: DraftText,
-  // [types.IMAGE_SRC]: ImageSrc
+  [types.DRAFTTEXT]: DraftText
 }
 
 export const getComponent = (type:string) => dict[type]
