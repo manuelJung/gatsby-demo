@@ -1,6 +1,7 @@
+// @flow
 import Text from './Text'
 // import Select from './Select'
-// import Boolean from './Boolean'
+import Boolean from './Boolean'
 // import Number from './Number'
 // import Array from './Array'
 // import Constant from './Constant'
@@ -21,7 +22,7 @@ export const types = {
 const dict = {
   [types.TEXT]: Text,
   // [types.SELECT]: Select,
-  // [types.BOOLEAN]: Boolean,
+  [types.BOOLEAN]: Boolean,
   // [types.NUMBER]: Number,
   // [types.ARRAY]: Array,
   // [types.CONSTANT]: Constant,
@@ -29,4 +30,4 @@ const dict = {
   // [types.IMAGE_SRC]: ImageSrc
 }
 
-export const getComponent = type => dict[type]
+export const getComponent = (type:string) => dict[type]
