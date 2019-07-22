@@ -1,22 +1,29 @@
+// @flow
 import React from 'react'
-import pt from 'prop-types'
+import styled from 'styled-components'
 
-export default class Number extends React.Component {
-  static propTypes = {
-    value: pt.number.isRequired,
-    onChange: pt.func.isRequired
-  }
-
-  state = {value: this.props.value}
-
-  handleChange = e => {
-    const value = parseInt(e.target.value)
-    this.setState({value}, () => this.props.onChange(value))
-  }
-
-  render(){
-    return (
-      <input type='number' value={this.state.value} onChange={this.handleChange}/>
-    )
-  }
+type Props = {
+  value: string,
+  onChange: (val:string) => mixed
 }
+
+export default function Text ({value, onChange}) {
+  return (
+    <Wrapper>
+      <input type="number" value={value} onChange={e => onChange(e.target.value)}/>
+    </Wrapper>
+  )
+}
+
+const Wrapper = styled.div`
+  width: 100%;
+  > input {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid grey;
+    border-radius: 5px;
+    &:focus {
+      border: 2px solid #1EA7FD;
+    }
+  }
+`
