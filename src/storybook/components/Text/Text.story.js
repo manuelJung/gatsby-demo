@@ -7,5 +7,7 @@ import * as request from './request'
 storiesOf('cms/base/Text', module)
   .add('Builder', create(Component, [
     text('gridArea', 'Grid-Area', 'Text'),
-    drafttext('children', 'Content', '')
+    drafttext('children', 'Content', '', {
+      hint: 'Hier ist der inhalt'
+    })
   ], request))

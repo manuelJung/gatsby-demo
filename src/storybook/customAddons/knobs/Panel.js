@@ -33,7 +33,10 @@ function ComponentFactory ({knob, onChange}) {
   const Component = getComponent(knob.type)
   return (
     <div className='knob-row'>
-      <div className='label'>{knob.label}</div>
+      <div className='label'>
+        {knob.label}
+        {knob.options.hint && <div className='hint'>{knob.options.hint}</div>}
+      </div>
       <div className='value'>
         <Component value={value} onChange={handleChange} {...knob.options} />
       </div>
@@ -68,6 +71,10 @@ const Wrapper = styled.div`
       width: 130px;
       padding: 3px;
       font-weight: bold;
+      > .hint {
+        font-weight: normal;
+        color: grey;
+      }
     }
     > .value {
       width: 100%;
