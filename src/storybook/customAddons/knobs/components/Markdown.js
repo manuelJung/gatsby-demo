@@ -31,7 +31,7 @@ export default function Markdown ({value, onChange}) {
 
 
 const Wrapper = styled.div`
-  border: 2px solid ${props => props.focused ? '#1EA7FD' : 'grey'};
+  border: 2px solid ${props => props.focused ? '#1EA7FD' : 'lightgrey'};
   border-radius: 5px;
 
     .CodeMirror {

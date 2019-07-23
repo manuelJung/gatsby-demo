@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   > input {
     width: 100%;
     padding: 8px;
-    border: 2px solid grey;
+    border: 2px solid lightgrey;
     border-radius: 5px;
     &:focus {
       border: 2px solid #1EA7FD;
