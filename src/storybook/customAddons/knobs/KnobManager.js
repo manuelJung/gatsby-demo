@@ -31,8 +31,6 @@ type Context = {
 let knobs:{[id:string]:Knob} = {}
 let globalValues:{[gobalId:string]:mixed} = {}
 let context = null
-let wasHydrated = false
-let wasUpdated = false
 let updaters:{[ComponentName:string]:Function} = {}
 
 const channel:Channel = addons.getChannel()
@@ -47,10 +45,6 @@ const updatePanel = () => {
   const knobs = getCurrentKnobs(context)
   channel.emit('addon:rlx-knobs:setKnobs', knobs)
   forceReRender()
-  if(!wasHydrated){
-    wasHydrated = true
-    hydrate(context)
-  }
 }
 
 export const setUpdater = (componentName:string, cb:Function) => {
@@ -75,48 +69,32 @@ const setKnob = (knob:Knob) => {
   updatePanel()
 }
 
-const hydrate = (context?:Context) => {
-  const knobs = getCurrentKnobs(context)
-  // let listener = window.addEventListener('message', e => {
-  //   window.removeEventListener('message', listener)
-  //   const component = {id:'',name:'',props:{}}
-  //   knobs.forEach(knob => {
-  //     let newKnob = {...knob}
-  //     if(component.props[newKnob.prop] !== undefined){
-  //       newKnob.value = component.props[newKnob.prop]
-  //       setKnob(newKnob)
-  //     }
-  //   })
-  //   updatePanel(context)
-  // })
-  // window.postMessage('knob-manager:ready')
-
-  setTimeout(() => {
-    const component = {id:'',name:'MagazineArticleTeaserByIdWidget',props:{
-      gridArea:'mabid', 
-      id: '4qswg0V6O6wEfp0EoKN1UH'
-    }}
-    if(updaters[component.name]){
-      component.props = updaters[component.name](component.props)
-    }
-    knobs.forEach(knob => {
-      let newKnob = {...knob}
-      if(component.props[newKnob.prop] !== undefined){
-        newKnob.value = component.props[newKnob.prop]
-        setKnob(newKnob)
-      }
-    })
-    updatePanel(context)
-  }, 500)
-}
-
 
 
 
 // updaters
 
 channel.on('addon:rlx-knobs:updateKnob', setKnob)
+
 channel.on('setCurrentStory', _context => {
   context = _context
-  updatePanel(context)
+  updatePanel()
+})
+
+channel.on('addon:rlx-contentful:set-component', component => {
+  const knobs = getCurrentKnobs()
+  
+  if(updaters[component.name]){
+    component.props = updaters[component.name](component.props)
+  }
+
+  knobs.forEach(knob => {
+    let newKnob = {...knob}
+    if(component.props[newKnob.prop] !== undefined){
+      newKnob.value = component.props[newKnob.prop]
+      setKnob(newKnob)
+    }
+  })
+
+  updatePanel()
 })
