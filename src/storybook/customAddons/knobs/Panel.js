@@ -2,6 +2,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import {getComponent} from './components'
+import {types} from './components'
 
 type Props = {
   channel: mixed,
@@ -25,6 +26,7 @@ export default function Panel ({channel, api}) {
 }
 
 function ComponentFactory ({knob, onChange}) {
+  if(knob.type === types.CONSTANT) return null
   const [value, setValue] = React.useState(knob.value)
 
   React.useEffect(() => setValue(knob.value), [knob.value])
