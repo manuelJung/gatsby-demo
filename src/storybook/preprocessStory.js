@@ -8,7 +8,12 @@ export default async function preprocessStory (rawStory) {
 
   await Promise.all(rawStory.COMPONENTS.map(async component => {
     const request = getRequest(component.name)
+
     if(request){
+      if(request.versionUpdate){
+        const newProps = request.versionUpdate(component.props)
+        component.props = newProps
+      }
       if(request.preprocessProps){
         const newProps = await request.preprocessProps(component.props)
         component.props = newProps

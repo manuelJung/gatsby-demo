@@ -11,22 +11,8 @@ registerComponentSelector(Component.name, props => {
 
 storiesOf('cms/base/MagazineArticleTeaserByIdWidget', module)
   .add('Builder', create(Component, [
-    constant('_updateId', 'a', 2),
+    constant('__version', 'a', 2),
     string('gridArea', 'Grid-Area', 'MagazineArticleTeaserByIdWidget'),
     string('magazineArticleId', 'Object ID', '')
-  ], request, updater))
+  ], request))
 
-
-function updater(props){
-  if(!props._updateId){
-    props = {...props, _updateId: 1}
-  }
-  if(props._updateId === 1){
-    props = {
-      _updateId: 2,
-      gridArea: props.gridArea,
-      magazineArticleId: props.id
-    }
-  }
-  return props
-}

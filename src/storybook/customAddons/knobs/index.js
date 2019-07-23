@@ -14,9 +14,9 @@ export const markdown = (prop, label, value, options={}) => ({prop, label, value
 export const imagesrc = (prop, label, value, options={}) => ({prop, label, value, options, type: types.IMAGE_SRC})
 
 
-export const create = (Component, knobs, request, update) => context => {
-  if(update){
-    manager.setUpdater(Component.name, update)
+export const create = (Component, knobs, request) => context => {
+  if(request.versionUpdate){
+    manager.setUpdater(Component.name, request.versionUpdate)
   }
   const userConfig = knobs.reduce((p,n) => {
     // TODO: error when reserved key is used as prop

@@ -17,3 +17,17 @@ export const createContext = async props => {
 
   return { article: hits[0], base64 }
 }
+
+// export const versionUpdate = props => {
+//   if(!props.__version){
+//     props = {...props, __version: 1}
+//   }
+//   if(props.__version === 1){
+//     props = {
+//       __version: 2,
+//       gridArea: props.gridArea,
+//       magazineArticleId: props.id
+//     }
+//   }
+//   return props
+// }
