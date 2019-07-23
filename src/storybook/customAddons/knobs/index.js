@@ -31,7 +31,7 @@ export const create = (Component, knobs, request, update) => context => {
     objPath.set(p, n.prop, manager.getKnobValue(knob))
     return p
   }, {})
-  return <Wrapper {...{userConfig, request, Component}}/>
+  return <Wrapper key={Component.name} {...{userConfig, request, Component}}/>
 }
 
 function Wrapper ({userConfig, Component, request}) {
