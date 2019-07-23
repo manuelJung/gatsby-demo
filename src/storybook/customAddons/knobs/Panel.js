@@ -26,6 +26,9 @@ export default function Panel ({channel, api}) {
 
 function ComponentFactory ({knob, onChange}) {
   const [value, setValue] = React.useState(knob.value)
+
+  React.useEffect(() => setValue(knob.value), [knob.value])
+
   const handleChange = value => {
     setValue(value)
     onChange(value)

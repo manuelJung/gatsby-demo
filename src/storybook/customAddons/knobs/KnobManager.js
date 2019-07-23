@@ -33,6 +33,7 @@ let globalValues:{[gobalId:string]:mixed} = {}
 let context = null
 let wasHydrated = false
 let wasUpdated = false
+let updaters:{[ComponentName:string]:Function} = {}
 
 const channel:Channel = addons.getChannel()
 
@@ -50,6 +51,10 @@ const updatePanel = () => {
     wasHydrated = true
     hydrate(context)
   }
+}
+
+export const setUpdater = (componentName:string, cb:Function) => {
+  updaters[componentName] = cb
 }
 
 export const getKnobValue = (knob:Knob) => {
@@ -87,7 +92,13 @@ const hydrate = (context?:Context) => {
   // window.postMessage('knob-manager:ready')
 
   setTimeout(() => {
-    const component = {id:'',name:'Button',props:{gridArea:'NewButton'}}
+    const component = {id:'',name:'MagazineArticleTeaserByIdWidget',props:{
+      gridArea:'mabid', 
+      id: '4qswg0V6O6wEfp0EoKN1UH'
+    }}
+    if(updaters[component.name]){
+      component.props = updaters[component.name](component.props)
+    }
     knobs.forEach(knob => {
       let newKnob = {...knob}
       if(component.props[newKnob.prop] !== undefined){
