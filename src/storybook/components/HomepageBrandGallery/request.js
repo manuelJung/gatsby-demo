@@ -1,5 +1,5 @@
 import toBase64 from 'utils/toBase64'
-import useStorefinder from 'modules/storefinder/hooks/useStorefinder'
+import {useStorefinder} from 'modules/storefinder'
 
 
 export async function createContext (props) {

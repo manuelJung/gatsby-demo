@@ -28,5 +28,9 @@ addRule({
   id: 'user/INITIAL_CART_FETCH',
   target: '*',
   addOnce: true,
-  consequence: () => actions.fetchCartRequest()
+  consequence: () => new Promise (resolve => {
+    setTimeout(() => {
+      resolve(actions.fetchCartRequest())
+    }, 2000)
+  })
 })

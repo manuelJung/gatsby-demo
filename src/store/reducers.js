@@ -1,19 +1,18 @@
 // @flow
 import { combineReducers } from 'redux'
-import storefinderReducer from 'modules/storefinder/reducer'
 
 import userModule from 'modules/user/reducer'
 
 
-const reducers = {
-  storefinder: storefinderReducer,
+const staticReducers = {
   user: userModule
 }
 
 
 // export default () => combineReducers(reducers)
 
-export default () => function rootReducer (state, action) {
+const createRootReducer = (reducers=staticReducers) => function rootReducer (state, action) {
+  console.log(Object.keys(reducers))
   if(action.type === 'PARTIAL_STATE_UPDATES'){
     const updates = action.payload
     let newState = Object.assign({}, state)
@@ -30,3 +29,15 @@ export default () => function rootReducer (state, action) {
   }
   return combineReducers(reducers)(state, action)
 }
+
+export function injectReducer (store, key, reducer) {
+  console.log('test', key)
+  if(store.asyncReducers[key]) return
+  store.asyncReducers[key] = reducer
+  const newReducers = Object.assign({}, staticReducers, store.asyncReducers)
+  const rootReducer = createRootReducer(newReducers)
+  store.replaceReducer(rootReducer)
+  console.log(store.getState())
+}
+
+export default createRootReducer

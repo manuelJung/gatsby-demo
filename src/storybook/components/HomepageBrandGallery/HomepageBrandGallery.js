@@ -2,6 +2,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import useLazyImageSrc from 'hooks/useLazyImageSrc'
+// import {useStorefinder} from 'modules/storefinder'
 import {Link} from 'gatsby'
 
 type Props = {
@@ -17,6 +18,7 @@ type Props = {
 }
 
 export default function HomepageBrandGallery ({title, images, context}:Props) {
+  // const storefinder = useStorefinder()
   return (
     <Wrapper className='HomepageBrandGallery'>
       <h3>{title}</h3>
@@ -27,6 +29,7 @@ export default function HomepageBrandGallery ({title, images, context}:Props) {
           </Link>
         )}
       </div>
+      {/* <div>{storefinder.data}</div> */}
     </Wrapper>
   )
 }
