@@ -1,4 +1,5 @@
 import toBase64 from 'utils/toBase64'
+import useStorefinder from 'modules/storefinder/hooks/useStorefinder'
 
 
 export async function createContext (props) {
@@ -19,3 +20,5 @@ export function preprocessProps (props) {
 
   return newProps
 }
+
+export const createPartialStateUpdates = async (store, props) => useStorefinder.preload(store, props)

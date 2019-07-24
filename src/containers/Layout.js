@@ -9,9 +9,9 @@ type Props = {
   children: React.Node
 }
 
-export default function Layout ({children}:Props) {
+export default function Layout ({children, partialStateUpdates}:Props) {
   return (
-    <Redux>
+    <Redux partialStateUpdates={partialStateUpdates}>
       <Header />
       {children}
       <Footer />

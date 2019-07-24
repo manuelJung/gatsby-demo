@@ -1,4 +1,4 @@
-const store = {}
+import {store} from 'store/bootstrap'
 
 export default async function preprocessStory (rawStory) {
   let story = {dict:{},grids:{},partialStateUpdates:[], components: []}

@@ -1,6 +1,7 @@
 // @flow
 // import config from 'config'
 import type {Item, Sku, User} from '../entities'
+import fetch from 'utils/fetch'
 const config = {}
 
 export type CartResponse = {
@@ -24,12 +25,13 @@ const mapCartResponse = (original:Object):CartResponse => ({
 })
 
 export const fetchCart = ():Promise<CartResponse> => {
-  return fetch(config.apiEndpoints.checkoutCart, {
-    credentials: 'include', 
-    mode: 'cors'
-  })
-  .then(res => res.json())
-  .then(mapCartResponse)
+  return Promise.reject('not working')
+  // return fetch('', {
+  //   credentials: 'include', 
+  //   mode: 'cors'
+  // })
+  // .then(res => res.json())
+  // .then(mapCartResponse)
 }
 
 export const addItem = (sku:Sku, groupedId:string):Promise<CartResponse> => {

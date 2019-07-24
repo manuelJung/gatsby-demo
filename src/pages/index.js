@@ -4,10 +4,10 @@ import Story from 'storybook/Story'
 import { graphql } from "gatsby"
 
 export default (props) => {
-
+  const {story} = props.data.staticBlock
   return (
-    <Layout>
-      <Story story={props.data.staticBlock.story}/>
+    <Layout partialStateUpdates={story.partialStateUpdates}>
+      <Story story={story}/>
     </Layout>
   )
 }
