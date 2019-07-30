@@ -44,6 +44,12 @@ export async function createPages ({graphql, actions}) {
     }
   }`)
 
+  actions.createPage({
+    path: "/product",
+    matchPath: "/product/*",
+    component: path.resolve(__dirname, 'src/templates/PDP.js'),
+  })
+
   gq.data.magazineArticlesByCategory.group.forEach(group => {
     const numPages = Math.ceil(group.nodes.length/20)
     const category = group.category.toLowerCase()
@@ -97,20 +103,6 @@ export async function createPages ({graphql, actions}) {
     context: {id: node.objectID}
   }))
 }
-
-export const onCreatePage = async ({ page, actions }) => {
-  const { createPage } = actions
-
-  // page.matchPath is a special key that's used for matching pages
-  // only on the client.
-  if (page.path.match(/^\/product/)) {
-    page.matchPath = "/product/*"
-    createPage(page)
-  }
-}
-
-
-
 
 
 export const createSchemaCustomization = ({ actions, cache }) => {
