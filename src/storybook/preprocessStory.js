@@ -58,45 +58,25 @@ export default async function preprocessStory (rawStory) {
     story.components = Array.from(components)
   }
 
-  story.grids = {}
-  if(rawStory.GRID.MOBILE_M.active) {
-    const flexedClasses = flexClasses(rawStory.GRID.MOBILE_M.components)
-    story.grids.MOBILE_M = `grid: ${rawStory.GRID.MOBILE_M.content}; grid-gap: ${rawStory.GRID_GAP.MOBILE_M}px; > .CmsWrapper{display:none} ${flexedClasses}`
-  }
-
-  if(rawStory.GRID.MOBILE_L.active) {
-    const flexedClasses = flexClasses(rawStory.GRID.MOBILE_L.components)
-    story.grids.MOBILE_L = `grid: ${rawStory.GRID.MOBILE_L.content}; grid-gap: ${rawStory.GRID_GAP.MOBILE_L}px; > .CmsWrapper{display:none} ${flexedClasses}`
-  }
-
-  if(rawStory.GRID.TABLET.active) {
-    const flexedClasses = flexClasses(rawStory.GRID.TABLET.components)
-    story.grids.TABLET = `grid: ${rawStory.GRID.TABLET.content}; grid-gap: ${rawStory.GRID_GAP.TABLET}px; > .CmsWrapper{display:none} ${flexedClasses}`
-  }
-
-  if(rawStory.GRID.LAPTOP.active) {
-    const flexedClasses = flexClasses(rawStory.GRID.LAPTOP.components)
-    story.grids.LAPTOP = `grid: ${rawStory.GRID.LAPTOP.content}; grid-gap: ${rawStory.GRID_GAP.LAPTOP}px; > .CmsWrapper{display:none} ${flexedClasses}`
-  }
-
-  if(rawStory.GRID.LAPTOP_L.active) {
-    const flexedClasses = flexClasses(rawStory.GRID.LAPTOP_L.components)
-    story.grids.LAPTOP_L = `grid: ${rawStory.GRID.LAPTOP_L.content}; grid-gap: ${rawStory.GRID_GAP.LAPTOP_L}px; > .CmsWrapper{display:none} ${flexedClasses}`
-  }
-
-  if(rawStory.GRID.LAPTOP_XL.active) {
-    const flexedClasses = flexClasses(rawStory.GRID.LAPTOP_XL.components)
-    story.grids.LAPTOP_XL = `grid: ${rawStory.GRID.LAPTOP_XL.content}; grid-gap: ${rawStory.GRID_GAP.LAPTOP_XL}px; > .CmsWrapper{display:none} ${flexedClasses}`
-  }
-
-  // story.grids = {
-  //   MOBILE_M: {
-  //     components: rawStory.GRID.MOBILE_M.components.map(gridName => byGridName[gridName]).filter(_ => _),
-  //     css: rawStory.GRID.MOBILE_M.content + ';\ngrid-gap:' + rawStory.GRID_GAP.MOBILE_M + 'px;'
-  //   }
-  // }
+  story.grids.MOBILE_M = createCss(rawStory, 'MOBILE_M')
+  story.grids.MOBILE_L = createCss(rawStory, 'MOBILE_L')
+  story.grids.TABLET = createCss(rawStory, 'TABLET')
+  story.grids.LAPTOP = createCss(rawStory, 'LAPTOP')
+  story.grids.LAPTOP_L = createCss(rawStory, 'LAPTOP_L')
+  story.grids.LAPTOP_XL = createCss(rawStory, 'LAPTOP_XL')
 
   return story
+}
+
+function createCss (rawStory, mediaSize) {
+  if (!rawStory.GRID[mediaSize].active) {
+    return null
+  }
+  const css = `grid: ${rawStory.GRID[mediaSize].content};`
+            + `grid-gap: ${rawStory.GRID_GAP[mediaSize]}px;`
+            + `> .CmsWrapper{display:none}`
+            + flexClasses(rawStory.GRID[mediaSize].components)
+  return css
 }
 
 function getRequest (name) {
