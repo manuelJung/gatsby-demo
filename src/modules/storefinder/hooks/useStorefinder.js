@@ -2,7 +2,7 @@
 import * as React from 'react'
 import {addRule} from 'redux-ruleset'
 import * as a from '../actions'
-import useConnect from 'utils/useConnect'
+import useConnect from 'hooks/useConnect'
 
 export type Props = {}
 

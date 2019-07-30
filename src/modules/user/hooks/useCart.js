@@ -2,7 +2,7 @@
 import * as t from '../entities'
 import * as s from '../selectors'
 import * as a from '../actions'
-import useConnect from 'utils/useConnect'
+import useConnect from 'hooks/useConnect'
 
 export type Props = $Diff<{},{}>
 
