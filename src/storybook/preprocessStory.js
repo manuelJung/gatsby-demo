@@ -1,7 +1,7 @@
 import {store} from 'store/bootstrap'
 
 export default async function preprocessStory (rawStory) {
-  let story = {dict:{},css:'',partialStateUpdates:[], components: [], raw:rawStory}
+  let story = {dict:{},css:'',partialStateUpdates:[], components: []}
   if(!rawStory) return story
 
   const byGridName = rawStory.COMPONENTS.reduce((dict, next) => (dict[next.props.gridArea]=next.id) && dict, {})

@@ -24,7 +24,7 @@ export default function HomepageBrandGallery ({title, images, context}:Props) {
       <h3>{title}</h3>
       <div className='gallery'>
         {images.map((img,i) => 
-          <Link key={img.src} to={img.src}>
+          <Link key={img.link} to={img.link}>
             <Image {...img} base64={context.base64Images[i]}/>
           </Link>
         )}

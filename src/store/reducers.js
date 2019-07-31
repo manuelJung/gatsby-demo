@@ -12,7 +12,6 @@ const staticReducers = {
 // export default () => combineReducers(reducers)
 
 const createRootReducer = (reducers=staticReducers) => function rootReducer (state, action) {
-  console.log(Object.keys(reducers))
   if(action.type === 'PARTIAL_STATE_UPDATES'){
     const updates = action.payload
     let newState = Object.assign({}, state)
@@ -31,13 +30,11 @@ const createRootReducer = (reducers=staticReducers) => function rootReducer (sta
 }
 
 export function injectReducer (store, key, reducer) {
-  console.log('test', key)
   if(store.asyncReducers[key]) return
   store.asyncReducers[key] = reducer
   const newReducers = Object.assign({}, staticReducers, store.asyncReducers)
   const rootReducer = createRootReducer(newReducers)
   store.replaceReducer(rootReducer)
-  console.log(store.getState())
 }
 
 export default createRootReducer
