@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import useLazyImageSrc from 'hooks/useLazyImageSrc'
 import {colors, positions} from './const'
 import useWidth from './useWidth'
-import {Link} from 'gatsby'
+import MaybeLink from 'theme/atoms/MaybeLink'
 
 
 type Props = {
@@ -48,7 +48,7 @@ export default function Banner (props:Props) {
   )
 }
 
-const Wrapper = styled(Link)`
+const Wrapper = styled(MaybeLink)`
   position: relative;
   cursor: pointer;
   > img {width:100%;}
