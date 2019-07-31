@@ -1,7 +1,7 @@
 import {store} from 'store/bootstrap'
 
 export default async function preprocessStory (rawStory) {
-  let story = {dict:{},grids:{},partialStateUpdates:[], components: []}
+  let story = {dict:{},css:'',partialStateUpdates:[], components: [], raw:rawStory}
   if(!rawStory) return story
 
   const byGridName = rawStory.COMPONENTS.reduce((dict, next) => (dict[next.props.gridArea]=next.id) && dict, {})
@@ -58,26 +58,41 @@ export default async function preprocessStory (rawStory) {
     story.components = Array.from(components)
   }
 
-  story.grids.MOBILE_M = createCss(rawStory, 'MOBILE_M')
-  story.grids.MOBILE_L = createCss(rawStory, 'MOBILE_L')
-  story.grids.TABLET = createCss(rawStory, 'TABLET')
-  story.grids.LAPTOP = createCss(rawStory, 'LAPTOP')
-  story.grids.LAPTOP_L = createCss(rawStory, 'LAPTOP_L')
-  story.grids.LAPTOP_XL = createCss(rawStory, 'LAPTOP_XL')
+  story.css = createCss(rawStory)
 
   return story
 }
 
-function createCss (rawStory, mediaSize) {
-  if (!rawStory.GRID[mediaSize].active) {
-    return null
-  }
-  const css = `grid: ${rawStory.GRID[mediaSize].content};`
-            + `grid-gap: ${rawStory.GRID_GAP[mediaSize]}px;`
+function createCss(rawStory){
+  const create = (grid,gap) => {
+    if (!grid.active) return ''
+    let css = `grid: ${grid.content};`
+         + `grid-gap: ${gap}px;`
+         + `> .CmsWrapper{display:none}`
+         + flexClasses(grid.components)
+    if(grid.abTest){
+      let a = `grid: ${grid.abTest.a.content};`
+            + `grid-gap: ${gap}px;`
             + `> .CmsWrapper{display:none}`
-            + flexClasses(rawStory.GRID[mediaSize].components)
+            + flexClasses(grid.abTest.a.components)
+      let b = `grid: ${grid.abTest.b.content};`
+            + `grid-gap: ${gap}px;`
+            + `> .CmsWrapper{display:none}`
+            + flexClasses(grid.abTest.b.components)
+      css += `body.ab-mode-a & {${a}} body.ab-mode-b & {${b}} `
+    }
+    return css
+  }
+
+  let css = `${create(rawStory.GRID.MOBILE_M,rawStory.GRID_GAP.MOBILE_M)}`
+            + `@media (min-width: 375px) {${create(rawStory.GRID.MOBILE_L,rawStory.GRID_GAP.MOBILE_L)}}`
+            + `@media (min-width: 525px) {${create(rawStory.GRID.TABLET,rawStory.GRID_GAP.TABLET)}}`
+            + `@media (min-width: 768px) {${create(rawStory.GRID.LAPTOP,rawStory.GRID_GAP.LAPTOP)}}`
+            + `@media (min-width: 990px) {${create(rawStory.GRID.LAPTOP_L,rawStory.GRID_GAP.LAPTOP_L)}}`
+            + `@media (min-width: 1200px) {${create(rawStory.GRID.LAPTOP_XL,rawStory.GRID_GAP.LAPTOP_XL)}}`
   return css
 }
+
 
 function getRequest (name) {
   try {

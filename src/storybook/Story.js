@@ -10,7 +10,7 @@ export default function Story ({story}:Props) {
   // console.log(story)
   if(!story) return null
   return (
-    <Wrapper className='Story' grids={story.grids}>
+    <Wrapper className='Story' css={story.css}>
       {story.components.map(id => {
         const {name,props} = story.dict[id] || {}
         const Component = components[name]
@@ -35,13 +35,8 @@ export default function Story ({story}:Props) {
 
 const Wrapper = styled.section`
   display: grid;
+  ${props => props.css}
   
-  ${props => props.grids.MOBILE_M}
-  @media (min-width: 375px) { ${props => props.grids.MOBILE_L} }
-  @media (min-width: 525px) { ${props => props.grids.TABLET} }
-  @media (min-width: 768px) { ${props => props.grids.LAPTOP} }
-  @media (min-width: 990px) { ${props => props.grids.LAPTOP_L} }
-  @media (min-width: 1200px) { ${props => props.grids.LAPTOP_XL} }
 
   margin: 0 auto;
 
@@ -67,7 +62,7 @@ const NotFound = styled.h1`
   grid-area: ${props => props.gridArea};
 `
 
-const ComponentWrapper = styled.div`
+const ComponentWrapper = styled.section`
   grid-area: ${props => props.gridArea};
   width: 100%;
   height: 100%;
