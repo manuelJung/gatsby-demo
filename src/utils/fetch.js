@@ -1,10 +1,11 @@
-var tryRequire = require('try-require')
-let fetch = tryRequire('node-fetch')
 
-if(!fetch){
-  if(typeof window !== 'undefined'){
-    fetch = window.fetch
-  }
+let fetch
+
+try {
+  fetch = require('node-fetch')
+}
+catch (e) {
+  fetch = window.fetch
 }
 
 export default fetch
