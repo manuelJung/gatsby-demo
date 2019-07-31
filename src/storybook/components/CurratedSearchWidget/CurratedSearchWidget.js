@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react'
-import styled from 'styled-components'
 import {fetchHits} from './utils'
 
 type Props = {
@@ -13,7 +12,7 @@ type Props = {
 }
 
 export default function CurratedSearchWidget ({hitsPerPage, queryStrings, context}:Props) {
-  const [hits, page, totalPages, setPage] = useHits(hitsPerPage, queryStrings, context.initialHits, context.totalPages)
+  const [hits, page, , setPage] = useHits(hitsPerPage, queryStrings, context.initialHits, context.totalPages)
 
   return (
     <div>
