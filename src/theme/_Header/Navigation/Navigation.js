@@ -24,15 +24,33 @@ type Props = {
 
 export default function Navigation (props:Props) {
   const [activeItem, setActiveItem] = React.useState(null)
+  const ref = React.useRef(null)
+  const listener = React.useRef()
 
   const handleClick = item => e => {
     if(!item.dropdown) return
     e.preventDefault()
     setActiveItem(item)
+
+    const elIsInDropdown = ({parentElement: el}:*) => {
+      return el ? el === ref.current || elIsInDropdown(el) : false
+    }
+    listener.current = e => {
+      if(!elIsInDropdown(e.target)){
+        window.removeEventListener('click', listener.current)
+        setActiveItem(null)
+      }
+    }
+    window.addEventListener('click', listener.current)
   }
 
+  // clear listener after location change
+  React.useEffect(() => {
+    return () => listener.current && window.removeEventListener('click', listener.current)
+  }, [])
+
   return (
-    <Wrapper className='Navigation'>
+    <Wrapper ref={ref} className='Navigation'>
       <Container as='nav'>
         {props.items.map(node => (
           <Link key={node.link} to={node.link} onClick={handleClick(node)}>
@@ -48,7 +66,7 @@ export default function Navigation (props:Props) {
                   <h3><Link to={node.link}>{node.label}</Link></h3>
                   <div className='sub-sub-items'>
                     {node.children.filter(node => node.displayInMenu).map(node => 
-                      <h6><Link to={node.link}>{node.label}</Link></h6>
+                      <h6 key={node.link}><Link to={node.link}>{node.label}</Link></h6>
                     )}
                   </div>
                 </li>
