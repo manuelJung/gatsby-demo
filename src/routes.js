@@ -1,6 +1,6 @@
 // @flow
 
-export const getMagazineListPath = (page, category) => {
+export const getMagazineListPath = (page:string, category:string) => {
   if(!page && !category) return '/magazin'
   if(!category) return `/magazin/page/${page+1}`
   if(!page) return `/magazin/${category.toLowerCase()}`
