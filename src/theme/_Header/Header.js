@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { IoMdMenu } from 'react-icons/io'
 import { FaRegStar, FaUser, FaShoppingCart, FaSearch, FaHome, FaRegHeart } from 'react-icons/fa'
 import logo from './logo'
+import Navigation from './Navigation'
 
 export default function Header () {
   const gq = useStaticQuery(graphql`
@@ -51,20 +52,14 @@ export default function Header () {
       </div>
       <div className='icon user-icon'><FaUser/></div>
       <div className='icon cart-icon'><FaShoppingCart/></div>
-      <nav>
-        {gq.navItems.nodes.map(node => (
-          <Link key={node.link} to={node.link}>
-            {node.label}
-          </Link>
-        ))}
-      </nav>
+      <Navigation items={gq.navItems.nodes}/>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.header`
   background: #eeeced;
-  margin-bottom:10px;
+  padding-bottom:10px;
 
   > .cart-icon   {grid-area: CartIcon;}
   > .user-icon   {grid-area: UserIcon;}
@@ -133,33 +128,14 @@ const Wrapper = styled.header`
     }
   }
 
-  > nav {
+  > .Navigation {
     display: none;
     grid-area: Navigation;
-    background: white;
-    > a {
-      flex: 1; 
-      display: inline-block;
-      font-size: 11px;
-      padding: 10px;
-      color: #777;
-      text-align: center;
-      border-bottom: 1px solid lightgrey;
-
-      @media (min-width: 1200px) {
-        font-size: 14px;
-      }
-
-      &:hover {
-        margin-bottom: 0px;
-        color: #993452;
-        border-bottom: 1px solid #993452;
-        &:after {border-top: 4px solid #993452;}
-      }
-    }
   }
 
   @media (min-width: 800px) {
+    padding-bottom:0px;
+    margin-bottom:10px;
     grid: " UspItems   UspItems   UspItems   UspItems   UspItems   UspItems   UspItems   "
           "      .     Logo           .      SearchForm UserIcon   CartIcon       .      " 100px
           " Navigation Navigation Navigation Navigation Navigation Navigation Navigation "
@@ -168,6 +144,6 @@ const Wrapper = styled.header`
 
     > .uspItems { display: flex; }
     > .burger-menu { display: none; }
-    > nav { display: flex; }
+    > .Navigation { display: flex; }
   }
 `
