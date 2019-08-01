@@ -33,7 +33,7 @@ function calculate() {
 
 
 export default function useWidth (initialWidth:number=0) {
-  const ref = React.useRef<HTMLElement>()
+  const ref = React.useRef<HTMLElement|null>(null)
   const [width, setWidth] = React.useState(initialWidth)
 
   React.useEffect(() => {
