@@ -6,7 +6,8 @@ import Footer from 'theme/_Footer'
 import Redux from './Redux'
 
 type Props = {
-  children: React.Node
+  children: React.Node,
+  partialStateUpdates?: mixed[]
 }
 
 export default function Layout ({children, partialStateUpdates}:Props) {

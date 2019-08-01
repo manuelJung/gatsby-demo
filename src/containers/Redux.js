@@ -4,7 +4,7 @@ import {store} from 'store/bootstrap'
 
 type Props = {
   children: React.Node,
-  story?: any
+  partialStateUpdates?: mixed[]
 }
 
 export default function Redux ({children, partialStateUpdates}:Props) {

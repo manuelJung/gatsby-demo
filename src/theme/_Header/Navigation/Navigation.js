@@ -23,7 +23,7 @@ type Props = {
 }
 
 export default function Navigation (props:Props) {
-  const [activeItem, setActiveItem] = React.useState(null)
+  const [activeItem, setActiveItem] = React.useState<Object>(null)
   const ref = React.useRef(null)
   const listener = React.useRef()
 
