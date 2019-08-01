@@ -58,6 +58,11 @@ const GlobalStyle = createGlobalStyle`
     outline-offset: -2px
   }
 
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 500;
+    line-height: 1.1;
+  }
+
   hr {
     margin-top: 20px;
     margin-bottom: 20px;
