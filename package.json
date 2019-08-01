@@ -5,7 +5,6 @@
   "version": "0.1.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "@opuscapita/react-markdown": "^2.3.9",
     "algolia": "0.0.0",
     "algoliasearch": "^3.33.0",
     "algoliasearch-helper": "^2.28.0",
@@ -55,9 +54,6 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-flow": "^6.23.0",
     "babel-register": "^6.26.0",
-    "firebase-cli": "^1.2.0",
-    "firebase-tools": "^6.5.0",
-    "gql2flow": "^0.4.5",
     "prettier": "^1.16.4"
   },
   "keywords": [
