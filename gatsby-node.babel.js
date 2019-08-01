@@ -47,7 +47,7 @@ export async function createPages ({graphql, actions}) {
   actions.createPage({
     path: "/product",
     matchPath: "/product/*",
-    component: path.resolve(__dirname, 'src/templates/PDP.js'),
+    component: path.resolve(__dirname, 'src/theme/templates/PDP.js'),
   })
 
   gq.data.magazineArticlesByCategory.group.forEach(group => {
@@ -55,12 +55,12 @@ export async function createPages ({graphql, actions}) {
     const category = group.category.toLowerCase()
     actions.createPage({
       path: `/magazin/${category}`,
-      component: path.resolve(__dirname, 'src/templates/MagazineList.js'),
+      component: path.resolve(__dirname, 'src/theme/templates/MagazineList.js'),
       context: createMagazineListContext(0, numPages, group.category)
     })
     Array(numPages).fill().forEach((_,i) => i !== 0 && actions.createPage({
       path: `/magazin/${category}/page/${i+1}`,
-      component: path.resolve(__dirname, 'src/templates/MagazineList.js'),
+      component: path.resolve(__dirname, 'src/theme/templates/MagazineList.js'),
       context: createMagazineListContext(i, numPages, group.category)
     }))
   })
@@ -69,12 +69,12 @@ export async function createPages ({graphql, actions}) {
     const numPages = Math.ceil(gq.data.magazineArticles.nodes.length / 20)
     actions.createPage({
       path: `/magazin`,
-      component: path.resolve(__dirname, 'src/templates/MagazineList.js'),
+      component: path.resolve(__dirname, 'src/theme/templates/MagazineList.js'),
       context: createMagazineListContext(0, numPages)
     })
     Array(numPages).fill().forEach((_,i) => i !== 0 && actions.createPage({
       path: `/magazin/page/${i+1}`,
-      component: path.resolve(__dirname, 'src/templates/MagazineList.js'),
+      component: path.resolve(__dirname, 'src/theme/templates/MagazineList.js'),
       context: createMagazineListContext(i, numPages)
     }))
   }
@@ -82,7 +82,7 @@ export async function createPages ({graphql, actions}) {
   gq.data.pages.nodes.forEach(page => {
     actions.createPage({
       path: `page/${page.urlKey}`,
-      component: path.resolve(__dirname, 'src/templates/Page.js'),
+      component: path.resolve(__dirname, 'src/theme/templates/Page.js'),
       context: {urlKey: page.urlKey}
     })
   })
@@ -91,7 +91,7 @@ export async function createPages ({graphql, actions}) {
     if(article.urlKey === 'kolumne-dunja-wermter-2') return
     actions.createPage({
       path: `magazin/a/${article.urlKey}`,
-      component: path.resolve(__dirname, 'src/templates/MagazineArticle.js'),
+      component: path.resolve(__dirname, 'src/theme/templates/MagazineArticle.js'),
       context: {urlKey: article.urlKey},
       modules: article.storyComponentPaths
     })
@@ -99,7 +99,7 @@ export async function createPages ({graphql, actions}) {
 
   gq.data.categories.nodes.forEach(node => actions.createPage({
     path: node.link,
-    component: path.resolve(__dirname, 'src/templates/Category.js'),
+    component: path.resolve(__dirname, 'src/theme/templates/Category.js'),
     context: {id: node.objectID}
   }))
 }

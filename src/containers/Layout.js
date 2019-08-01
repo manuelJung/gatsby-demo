@@ -1,8 +1,8 @@
 // @flow
 import * as React from 'react'
 import './layout.css'
-import Header from './Header'
-import Footer from './Footer'
+import Header from 'theme/_Header'
+import Footer from 'theme/_Footer'
 import Redux from './Redux'
 
 type Props = {

@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react'
 import styled from 'styled-components'
-import ProductWidget from 'components/ProductWidget'
+import ProductWidget from 'theme/molecules/ProductWidget'
 
 type Props = {
   title: string,
