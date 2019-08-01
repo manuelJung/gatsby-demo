@@ -1,0 +1,15 @@
+[ignore]
+<PROJECT_ROOT>/.cache/.*
+<PROJECT_ROOT>/public/.*
+<PROJECT_ROOT>/.base64/.*
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+module.system.node.resolve_dirname=src
+
+[strict]

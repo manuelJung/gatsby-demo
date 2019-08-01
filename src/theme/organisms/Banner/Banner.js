@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react'
+import * as t from './types'
 import styled from 'styled-components'
 import useLazyImageSrc from 'hooks/useLazyImageSrc'
 import {colors, positions} from './const'
@@ -7,22 +8,7 @@ import useWidth from './useWidth'
 import MaybeLink from 'theme/atoms/MaybeLink'
 
 
-type Props = {
-  src: string,
-  alt: string,
-  link: string,
-  title: string,
-  subtitle: string,
-  overlayColor: string,
-  overlayPosition: string,
-  ratio: string,
-  ratioSubtitle: string,
-  context: {
-    base64: string
-  }
-}
-
-export default function Banner (props:Props) {
+export default function Banner (props:t.Props) {
   const [ref, image] = useLazyImageSrc(props.src, props.context.base64)
   const [widthRef, width] = useWidth()
 

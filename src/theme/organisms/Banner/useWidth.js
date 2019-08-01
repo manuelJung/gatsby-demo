@@ -5,13 +5,13 @@ import debounce from 'utils/debounce'
 let requested = false
 let list:[HTMLElement,Function][] = []
 
-let run = () => null
+let run = (arg:*) => null
 try {
   run = window.requestIdleCallback || window.requestAnimationFrame
 }
 catch(e){}
 
-function calcWidth(el?:HTMLElement, cb:(size:number)=>void){
+function calcWidth(el:HTMLElement|null, cb:(size:number)=>void){
   if(!el) return
   list.push([el, cb])
   if(!requested) run(calculate)
@@ -32,8 +32,8 @@ function calculate() {
 }
 
 
-export default function useWidth (initialWidth=0) {
-  const ref = React.useRef()
+export default function useWidth (initialWidth:number=0) {
+  const ref = React.useRef<HTMLElement>()
   const [width, setWidth] = React.useState(initialWidth)
 
   React.useEffect(() => {
