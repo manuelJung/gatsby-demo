@@ -2,10 +2,10 @@
 import * as React from 'react'
 import { useStaticQuery, graphql, Link } from "gatsby"
 import styled from 'styled-components'
-import { IoMdMenu } from 'react-icons/io'
 import { FaRegStar, FaUser, FaShoppingCart, FaSearch, FaHome, FaRegHeart } from 'react-icons/fa'
 import logo from './logo'
 import Navigation from './Navigation'
+import Drawer from './Drawer'
 
 export default function Header () {
   const gq = useStaticQuery(graphql`
@@ -45,7 +45,7 @@ export default function Header () {
       <Link className='logo' to='/'>
         <img src={logo} alt='Wundercurves Logo'/>
       </Link>
-      <div className='icon burger-menu'><IoMdMenu/></div>
+      <Drawer />
       <div className='search-form'>
         <input type='text'/>
         <div className='icon search-icon'><FaSearch/></div>
@@ -61,10 +61,10 @@ const Wrapper = styled.header`
   background: #eeeced;
   padding-bottom:10px;
 
-  > .cart-icon   {grid-area: CartIcon;}
-  > .user-icon   {grid-area: UserIcon;}
-  > .burger-menu {grid-area: BurgerMenu;}
-  > .logo        {grid-area: Logo;}
+  > .cart-icon {grid-area: CartIcon;}
+  > .user-icon {grid-area: UserIcon;}
+  > .Drawer    {grid-area: Drawer;}
+  > .logo      {grid-area: Logo;}
 
   display: grid;
   align-items: center;
@@ -72,7 +72,7 @@ const Wrapper = styled.header`
   > * {width: 100%;}
 
   grid: " Logo       Logo       Logo     Logo "
-        " BurgerMenu SearchForm UserIcon CartIcon " 
+        " Drawer SearchForm UserIcon CartIcon " 
         / 50px       1fr        50px     50px;
   grid-column-gap: 0px;
 
@@ -143,7 +143,7 @@ const Wrapper = styled.header`
     grid-column-gap: 30px;
 
     > .uspItems { display: flex; }
-    > .burger-menu { display: none; }
+    > .Drawer { display: none; }
     > .Navigation { display: flex; }
   }
 `
