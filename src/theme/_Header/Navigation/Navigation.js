@@ -136,6 +136,7 @@ const Dropdown = styled.div`
     flex-wrap: wrap;
     > .submenu-item {
       flex-basis: 25%;
+      box-sizing: border-box;
       padding: 10px;
       > h3 {
         border-bottom: 1px dotted rgb(85, 85, 85);

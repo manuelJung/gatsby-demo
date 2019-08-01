@@ -21,6 +21,7 @@ export default function Layout ({children, partialStateUpdates}:Props) {
 }
 
 const GlobalStyle = createGlobalStyle`
+
   html, body {
     margin: 0;
     padding: 0;
@@ -61,6 +62,16 @@ const GlobalStyle = createGlobalStyle`
   h1, h2, h3, h4, h5, h6 {
     font-weight: 500;
     line-height: 1.1;
+  }
+
+  h1, h2, h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  h4, h5, h6 {
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
   hr {
