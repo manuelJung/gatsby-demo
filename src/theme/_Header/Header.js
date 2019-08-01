@@ -35,7 +35,7 @@ export default function Header () {
 
   return (
     <Wrapper className='header'>
-      <div className='usps'>
+      <div className='uspItems'>
         <div><FaHome/> Marktplatz für große Größen</div>
         <div><FaRegHeart/> Beliebte Shops & Marken</div>
         <div><FaShoppingCart/> Riesige Auswahl</div>
@@ -64,18 +64,25 @@ export default function Header () {
 
 const Wrapper = styled.header`
   background: #eeeced;
-  padding: 5px;
-  padding-bottom:10px;
+  margin-bottom:10px;
+
+  > .cart-icon   {grid-area: CartIcon;}
+  > .user-icon   {grid-area: UserIcon;}
+  > .burger-menu {grid-area: BurgerMenu;}
+  > .logo        {grid-area: Logo;}
 
   display: grid;
+  align-items: center;
+  justify-items: center;
+  > * {width: 100%;}
+
   grid: " Logo       Logo       Logo     Logo "
         " BurgerMenu SearchForm UserIcon CartIcon " 
         / 50px       1fr        50px     50px;
-  grid-gap: 5px;
+  grid-column-gap: 0px;
 
-  > .usps { grid-area: Usps; display: none; }
-
-  > .usps {
+  > .uspItems {
+    grid-area: UspItems;
     display: none;
     background: #993452;
     color: #e9bfcd;
@@ -92,13 +99,7 @@ const Wrapper = styled.header`
   }
 
   > .logo {
-    grid-area: Logo;
-    display: flex;
-    justify-content: center;
-
-    > * {
-      max-width: 300px;
-    }
+    > img {width: 300px; margin: 5px;}
   }
 
   > .icon {
@@ -107,6 +108,9 @@ const Wrapper = styled.header`
     font-size: 25px;
     padding:10px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   > .search-form {
@@ -116,12 +120,15 @@ const Wrapper = styled.header`
     padding: 4px;
     display: flex;
     align-items: center;
+    align-self: center;
+    height: 40px;
     > input {
       flex: 1;
       border: none;
       outline: none;
     }
     > .icon {
+      display: flex;
       color: #993452;
     }
   }
@@ -131,24 +138,35 @@ const Wrapper = styled.header`
     grid-area: Navigation;
     background: white;
     > a {
-      padding: 5px;
       flex: 1; 
+      display: inline-block;
+      font-size: 11px;
+      padding: 10px;
+      color: #777;
       text-align: center;
+      border-bottom: 1px solid lightgrey;
+
+      @media (min-width: 1200px) {
+        font-size: 14px;
+      }
+
+      &:hover {
+        margin-bottom: 0px;
+        color: #993452;
+        border-bottom: 1px solid #993452;
+        &:after {border-top: 4px solid #993452;}
+      }
     }
   }
 
-  > .cart-icon {grid-area: CartIcon;}
-  > .user-icon {grid-area: UserIcon;}
-  > .burger-menu {grid-area: BurgerMenu;}
-
   @media (min-width: 800px) {
-    grid: "Usps Usps Usps Usps"
-          "Logo SearchForm UserIcon CartIcon" 70px
-          "Navigation Navigation Navigation Navigation"
-          / 500px 1fr  100px  100px ;
-    grid-gap: 5px;
+    grid: " UspItems   UspItems   UspItems   UspItems   UspItems   UspItems   UspItems   "
+          "      .     Logo           .      SearchForm UserIcon   CartIcon       .      " 100px
+          " Navigation Navigation Navigation Navigation Navigation Navigation Navigation "
+          /   30px        200px      1fr       300px      30px       30px      2fr;
+    grid-column-gap: 30px;
 
-    > .usps { display: flex; }
+    > .uspItems { display: flex; }
     > .burger-menu { display: none; }
     > nav { display: flex; }
   }
