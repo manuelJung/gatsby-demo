@@ -96,7 +96,7 @@ function createCss(rawStory){
 
 function getRequest (name) {
   try {
-    const request = require(`./components/${name}/request`)
+    const request = require(`../theme/organisms/${name}/request`)
     return request
   }
   catch(e){

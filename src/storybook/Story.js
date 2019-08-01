@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as components from 'storybook/components'
+import * as components from 'theme/organisms'
 import styled from 'styled-components'
 
 type Props = {
