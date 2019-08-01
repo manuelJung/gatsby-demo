@@ -1,13 +1,6 @@
 // @flow
-import * as React from 'react'
-import Layout from 'containers/Layout'
 
-export default function Route404 () {
-  return (
-    <Layout>
-      <p/>
-      <h1>not found</h1>
-      <p/>
-    </Layout>
-  )
-}
+/**
+404 route must stay in src/pages and cannot be dynamically created
+ */
+export {default} from 'theme/templates/404'
